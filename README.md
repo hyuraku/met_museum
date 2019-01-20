@@ -22,7 +22,32 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+require 'met_museum'
+
+MetMuseum::Collection.objects
+=> {"total"=>490607,
+ "objectIDs"=>
+  [1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+--< omit >--
+  490607}
+
+MetMuseum::Collection.object(1000)
+=> {"objectID"=>1000,
+ "isHighlight"=>false,
+ "accessionNumber"=>"10.149.99",
+ "isPublicDomain"=>true,
+ --< omit >--
+ "repository"=>"Metropolitan Museum of Art, New York, NY",
+ "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
+```
 
 ## Development
 
@@ -32,7 +57,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/met_museum. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/hyuraku/met_museum. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
