@@ -1,5 +1,0 @@
-#!/usr/bin/env ruby
-
-require 'met_museum'
-
-p MetMuseum::Collection.objects(1000)
