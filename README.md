@@ -2,6 +2,8 @@
 
 The Metropolitan Museum of Art Collection API Ruby wrapper
 
+The API document is [here](https://metmuseum.github.io/)
+
 ## Installation
 
 Add this line to your application's Gemfile:
