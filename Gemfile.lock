@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    met_museum (0.1.0)
+    met_museum (0.1.1)
 
 GEM
   remote: https://rubygems.org/
