@@ -6,7 +6,7 @@ module MetMuseum
     # Return a listing of all valid Object IDs available to use
     # @param [String] metadataDate Returns any objects with updated data after this date
     # @return [Hash<total, Integer>] The total number of publicly-available objects
-    # @return [Hash<objectIDs, Integer>] An array containing the object ID of publicly-available object
+    # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
     def self.objects(metadataDate = nil)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get PUBLIC_URI, {:metadataDate => metadataDate}
