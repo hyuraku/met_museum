@@ -37,7 +37,18 @@ MetMuseum::Collection.objects
    7,
    8,
 --< omit >--
-  490607}
+  820613]}
+
+MetMuseum::Collection.objects('2018-10-10')
+=>{"total"=>88232,
+ "objectIDs"=>
+  [33,
+   35,
+   36,
+   74,
+   75,
+--< omit >--
+   820613]}
 
 MetMuseum::Collection.object(1000)
 => {"objectID"=>1000,
