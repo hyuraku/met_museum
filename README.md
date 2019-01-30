@@ -25,7 +25,7 @@ Or install it yourself as:
 ```
 require 'met_museum'
 ```
-
+The description of the method is as follows
 <details>
 <summary>
   MetMuseum::Collection.objects
@@ -58,7 +58,8 @@ MetMuseum::Collection.objects('2018-10-10')
    820613]}
 ```
 </pre>
-<details>
+</details>
+
 <details>
 <summary>
   MetMuseum::Collection.object
