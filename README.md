@@ -24,7 +24,14 @@ Or install it yourself as:
 
 ```
 require 'met_museum'
+```
 
+<details>
+<summary>
+  MetMuseum::Collection.objects
+</summary>
+<pre>
+```
 MetMuseum::Collection.objects
 => {"total"=>490607,
  "objectIDs"=>
@@ -49,74 +56,66 @@ MetMuseum::Collection.objects('2018-10-10')
    75,
 --< omit >--
    820613]}
-
-MetMuseum::Collection.object(1000)
+```
+</pre>
+<details>
+<details>
+<summary>
+  MetMuseum::Collection.object
+</summary>
+<pre>
+```
+MetMuseum::Collection.object(1000)    
 => {"objectID"=>1000,
  "isHighlight"=>false,
  "accessionNumber"=>"10.149.99",
  "isPublicDomain"=>true,
- --< omit >--
+ "primaryImage"=>"https://images.metmuseum.org/CRDImages/ad/original/DP258638.jpg",
+ "primaryImageSmall"=>"https://images.metmuseum.org/CRDImages/ad/web-large/DP258638.jpg",
+ "additionalImages"=>[],
+ "constituents"=>nil,
+ "department"=>"The American Wing",
+ "objectName"=>"Bread plate",
+ "title"=>"Bread Plate",
+ "culture"=>"Chinese, for American market",
+ "period"=>"",
+ "dynasty"=>"",
+ "reign"=>"",
+ "portfolio"=>"",
+ "artistRole"=>"",
+ "artistPrefix"=>"",
+ "artistDisplayName"=>"",
+ "artistDisplayBio"=>"",
+ "artistSuffix"=>"",
+ "artistAlphaSort"=>"",
+ "artistNationality"=>"",
+ "artistBeginDate"=>"",
+ "artistEndDate"=>"",
+ "objectDate"=>"1785–90",
+ "objectBeginDate"=>1785,
+ "objectEndDate"=>1790,
+ "medium"=>"Porcelain",
+ "dimensions"=>"Diam. 6 1/4 in. (15.9 cm)",
+ "creditLine"=>"Bequest of James T. Woodward, 1910",
+ "geographyType"=>"Made in",
+ "city"=>"",
+ "state"=>"",
+ "county"=>"",
+ "country"=>"China",
+ "region"=>"",
+ "subregion"=>"",
+ "locale"=>"",
+ "locus"=>"",
+ "excavation"=>"",
+ "river"=>"",
+ "classification"=>"Ceramics",
+ "rightsAndReproduction"=>"",
+ "linkResource"=>"",
+ "metadataDate"=>"2019-01-30T09:08:07.74Z",
  "repository"=>"Metropolitan Museum of Art, New York, NY",
  "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
 ```
-
-<details>
-  <summary>
-    MetMuseum::Collection.object
-  </summary>
-  <div>
-  ```
-  MetMuseum::Collection.object(1000)    
-  => {"objectID"=>1000,
-   "isHighlight"=>false,
-   "accessionNumber"=>"10.149.99",
-   "isPublicDomain"=>true,
-   "primaryImage"=>"https://images.metmuseum.org/CRDImages/ad/original/DP258638.jpg",
-   "primaryImageSmall"=>"https://images.metmuseum.org/CRDImages/ad/web-large/DP258638.jpg",
-   "additionalImages"=>[],
-   "constituents"=>nil,
-   "department"=>"The American Wing",
-   "objectName"=>"Bread plate",
-   "title"=>"Bread Plate",
-   "culture"=>"Chinese, for American market",
-   "period"=>"",
-   "dynasty"=>"",
-   "reign"=>"",
-   "portfolio"=>"",
-   "artistRole"=>"",
-   "artistPrefix"=>"",
-   "artistDisplayName"=>"",
-   "artistDisplayBio"=>"",
-   "artistSuffix"=>"",
-   "artistAlphaSort"=>"",
-   "artistNationality"=>"",
-   "artistBeginDate"=>"",
-   "artistEndDate"=>"",
-   "objectDate"=>"1785–90",
-   "objectBeginDate"=>1785,
-   "objectEndDate"=>1790,
-   "medium"=>"Porcelain",
-   "dimensions"=>"Diam. 6 1/4 in. (15.9 cm)",
-   "creditLine"=>"Bequest of James T. Woodward, 1910",
-   "geographyType"=>"Made in",
-   "city"=>"",
-   "state"=>"",
-   "county"=>"",
-   "country"=>"China",
-   "region"=>"",
-   "subregion"=>"",
-   "locale"=>"",
-   "locus"=>"",
-   "excavation"=>"",
-   "river"=>"",
-   "classification"=>"Ceramics",
-   "rightsAndReproduction"=>"",
-   "linkResource"=>"",
-   "metadataDate"=>"2019-01-30T09:08:07.74Z",
-   "repository"=>"Metropolitan Museum of Art, New York, NY",
-   "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
-  ```
-  </div>
+</pre>
 </details>
 
 ## Contributing
