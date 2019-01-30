@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["calenthird@gamil.com"]
 
   spec.summary       = %q{MET museum api wrapper}
-  spec.description   = %q{The Metropolitan Museum of Art Collection API Ruby wrapper }
+  spec.description   = %q{The Metropolitan Museum of Art Collection API wrapper }
   spec.homepage      = "https://github.com/hyuraku/met_museum"
   spec.license       = "MIT"
 
