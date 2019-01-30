@@ -45,7 +45,6 @@ MetMuseum::Collection.objects
    8,
 --< omit >--
   820613]}
-
 MetMuseum::Collection.objects('2018-10-10')
 =>{"total"=>88232,
  "objectIDs"=>
@@ -59,7 +58,7 @@ MetMuseum::Collection.objects('2018-10-10')
 ```
 </pre>
 </details>
-
+<hr>
 <details>
 <summary>
   MetMuseum::Collection.object
