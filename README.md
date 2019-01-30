@@ -115,7 +115,7 @@ MetMuseum::Collection.object(1000)
    "metadataDate"=>"2019-01-30T09:08:07.74Z",
    "repository"=>"Metropolitan Museum of Art, New York, NY",
    "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
-
+  ```
   </div>
 </details>
 
