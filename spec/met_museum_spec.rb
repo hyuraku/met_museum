@@ -2,7 +2,7 @@ RSpec.describe MetMuseum do
 
   describe 'Collection' do
     describe 'objects' do
-      let(:objects) { MetMuseum::Collection.objects(metadataDate)}
+      let(:objects) { MetMuseum::Collection.new().objects(metadataDate)}
       context "all data" do
         let(:metadataDate) {nil}
         it "success" do
@@ -20,7 +20,7 @@ RSpec.describe MetMuseum do
     end
 
     describe 'object' do
-      let(:object) { MetMuseum::Collection.object(objectID) }
+      let(:object) { MetMuseum::Collection.new().object(objectID) }
       context "Real objectID" do
         let(:objectID) {1000}
         it "success with objectID" do
