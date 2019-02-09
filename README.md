@@ -70,7 +70,7 @@ collection.objects('2018-10-10')
 ```
 collection = MetMuseum::Collection.new()
 
-collection.objects.object(1000)    
+collection.object(1000)    
 => {"objectID"=>1000,
  "isHighlight"=>false,
  "accessionNumber"=>"10.149.99",
