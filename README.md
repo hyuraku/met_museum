@@ -32,7 +32,9 @@ The description of the method is as follows
 </summary>
 <pre>
 ```
-MetMuseum::Collection.objects
+collection = MetMuseum::Collection.new()
+
+collection.objects
 => {"total"=>490607,
  "objectIDs"=>
   [1,
@@ -45,7 +47,8 @@ MetMuseum::Collection.objects
    8,
 --< omit >--
   820613]}
-MetMuseum::Collection.objects('2018-10-10')
+
+collection.objects('2018-10-10')
 =>{"total"=>88232,
  "objectIDs"=>
   [33,
@@ -65,7 +68,9 @@ MetMuseum::Collection.objects('2018-10-10')
 </summary>
 <pre>
 ```
-MetMuseum::Collection.object(1000)    
+collection = MetMuseum::Collection.new()
+
+collection.object(1000)    
 => {"objectID"=>1000,
  "isHighlight"=>false,
  "accessionNumber"=>"10.149.99",
