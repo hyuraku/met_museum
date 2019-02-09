@@ -1,7 +1,25 @@
 module MetMuseum
   class Collection
+    MetMuseumError = Class.new(StandardError)
+    BadRequestError = Class.new(MetMuseumError)
+    UnauthorizedError = Class.new(MetMuseumError)
+    ForbiddenError = Class.new(MetMuseumError)
+    ApiRequestsQuotaReachedError = Class.new(MetMuseumError)
+    NotFoundError = Class.new(MetMuseumError)
+    UnprocessableEntityError = Class.new(MetMuseumError)
+    ApiError = Class.new(MetMuseumError)
+
     API_ENDPOINT = "https://collectionapi.metmuseum.org".freeze
     PUBLIC_URI = "/public/collection/v1/objects".freeze
+
+    HTTP_OK_CODE = 200.freeze
+
+    HTTP_BAD_REQUEST_CODE = 400.freeze
+    HTTP_UNAUTHORIZED_CODE = 401.freeze
+    HTTP_FORBIDDEN_CODE = 403.freeze
+    HTTP_NOT_FOUND_CODE = 404.freeze
+    HTTP_UNPROCESSABLE_ENTITY_CODE = 429.freeze
+
 
     # Return a listing of all valid Object IDs available to use
     # @param [String] metadataDate Returns any objects with updated data after this date
@@ -10,7 +28,9 @@ module MetMuseum
     def objects(metadataDate = nil)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get PUBLIC_URI, {:metadataDate => metadataDate}
-      Oj.load(response.body)
+      Oj.load(response.body) if response_successful?(response)
+
+      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
 
     # returns a record for an object, containing all open access data about that object, including its image (if the image is available under Open Access)
@@ -67,7 +87,31 @@ module MetMuseum
     # @return [Hash<total, String>] The total number of publicly-available objects
     def object(objectID)
       response = Faraday.get "#{API_ENDPOINT}#{PUBLIC_URI}/#{objectID}"
-      Oj.load(response.body)
+      Oj.load(response.body)if response_successful?(response)
+
+      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+    end
+
+    def error_class(response)
+      case response.status
+      when HTTP_BAD_REQUEST_CODE
+        BadRequestError
+      when HTTP_UNAUTHORIZED_CODE
+        UnauthorizedError
+      when HTTP_FORBIDDEN_CODE
+        return ApiRequestsQuotaReachedError if api_requests_quota_reached?
+        ForbiddenError
+      when HTTP_NOT_FOUND_CODE
+        NotFoundError
+      when HTTP_UNPROCESSABLE_ENTITY_CODE
+        UnprocessableEntityError
+      else
+        ApiError
+      end
+    end
+
+    def response_successful?(response)
+      response.status == HTTP_OK_CODE
     end
   end
 end
