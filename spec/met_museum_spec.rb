@@ -30,11 +30,14 @@ RSpec.describe MetMuseum do
           expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/#{objectID}")
         end
       end
+    end
 
-      context "Unreal objectID" do
-        let(:objectID) {999999}
-        it "failure with id" do
-          expect(object["message"]).to eq ("ObjectID not found")
+    describe 'search' do
+      let(:search) {MetMuseum::Collection.new().search(q)}
+      context '' do
+        let(:q){"sunflowers"}
+        it "successful search" do
+          expect(search["objectIDs"].size).to eq (search["total"])
         end
       end
     end
