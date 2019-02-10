@@ -93,13 +93,16 @@ module MetMuseum
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
 
+    # returns a listing of all Object IDs for objects that contain the search query within the object’s data
+    # @param [String] q Returns a listing of all Object IDs for objects that contain the search query within the object’s data
+    # @return [Integer] total The total number of publicly-available objects
+    # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     def search(q)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get SEARCH_URI, {:q => q}
       Oj.load(response.body)if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
-
     end
 
     def error_class(response)
