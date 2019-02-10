@@ -61,7 +61,9 @@ collection.objects('2018-10-10')
 ```
 </pre>
 </details>
+
 <hr>
+
 <details>
 <summary>
   MetMuseum::Collection.object
