@@ -26,14 +26,11 @@ Or install it yourself as:
 require 'met_museum'
 ```
 The description of the method is as follows
-<details>
-<summary>
-  MetMuseum::Collection.objects
-</summary>
-<pre>
+
+
+MetMuseum::Collection.objects
 ```
 collection = MetMuseum::Collection.new()
-
 collection.objects
 => {"total"=>490607,
  "objectIDs"=>
@@ -41,10 +38,6 @@ collection.objects
    2,
    3,
    4,
-   5,
-   6,
-   7,
-   8,
 --< omit >--
   820613]}
 
@@ -59,10 +52,6 @@ collection.objects('2018-10-10')
 --< omit >--
    820613]}
 ```
-</pre>
-</details>
-
-<hr>
 
 <details>
 <summary>
@@ -71,7 +60,6 @@ collection.objects('2018-10-10')
 <pre>
 ```
 collection = MetMuseum::Collection.new()
-
 collection.object(1000)    
 => {"objectID"=>1000,
  "isHighlight"=>false,
