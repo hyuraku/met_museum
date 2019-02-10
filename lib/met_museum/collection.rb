@@ -11,6 +11,7 @@ module MetMuseum
 
     API_ENDPOINT = "https://collectionapi.metmuseum.org".freeze
     PUBLIC_URI = "/public/collection/v1/objects".freeze
+    SEARCH_URI = "/public/collection/v1/search".freeze
 
     HTTP_OK_CODE = 200.freeze
 
@@ -90,6 +91,15 @@ module MetMuseum
       Oj.load(response.body)if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+    end
+
+    def search(q)
+      conn = Faraday.new(:url => API_ENDPOINT)
+      response = conn.get SEARCH_URI, {:q => q}
+      Oj.load(response.body)if response_successful?(response)
+
+      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+
     end
 
     def error_class(response)
