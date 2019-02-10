@@ -29,7 +29,7 @@ module MetMuseum
     def objects(metadataDate = nil)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get PUBLIC_URI, {:metadataDate => metadataDate}
-      Oj.load(response.body) if response_successful?(response)
+      return Oj.load(response.body) if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
@@ -88,7 +88,7 @@ module MetMuseum
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     def object(objectID)
       response = Faraday.get "#{API_ENDPOINT}#{PUBLIC_URI}/#{objectID}"
-      Oj.load(response.body)if response_successful?(response)
+      return Oj.load(response.body)if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
@@ -100,7 +100,7 @@ module MetMuseum
     def search(q)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get SEARCH_URI, {:q => q}
-      Oj.load(response.body)if response_successful?(response)
+      return Oj.load(response.body)if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
