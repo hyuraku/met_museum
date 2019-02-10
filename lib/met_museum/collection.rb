@@ -84,7 +84,7 @@ module MetMuseum
     # @return [Hash<metadataDate, String>] Date metadata was last updated
     # @return [Hash<repository, String>]
     # @return [Hash<objectURL, String>] URL to object's page on metmuseum.org
-    # @return [Hash<total, String>] The total number of publicly-available objects
+    # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     def object(objectID)
       response = Faraday.get "#{API_ENDPOINT}#{PUBLIC_URI}/#{objectID}"
       Oj.load(response.body)if response_successful?(response)
