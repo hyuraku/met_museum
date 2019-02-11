@@ -113,6 +113,20 @@ collection.object(1000)
 </pre>
 </details>
 
+MetMuseum::Collection.search
+```
+collection.search('ocean')
+=> {"total"=>189,
+ "objectIDs"=>
+  [250487,
+   12544,
+   436005,
+   8314,
+   8315,
+   8317,
+   --< omit >--
+```
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/hyuraku/met_museum. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
