@@ -34,7 +34,7 @@ RSpec.describe MetMuseum do
 
     describe 'search' do
       let(:search) {MetMuseum::Collection.new().search(q)}
-      context '' do
+      context 'real query' do
         let(:q){"sunflowers"}
         it "successful search" do
           expect(search["objectIDs"].size).to eq (search["total"])
