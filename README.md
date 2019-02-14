@@ -1,3 +1,5 @@
+<img src="https://img.shields.io/travis/hyuraku/met_museum.svg"> <img src="https://img.shields.io/gem/v/met_museum.svg">
+
 # MetMuseum
 
 The Metropolitan Museum of Art Collection API Ruby wrapper
