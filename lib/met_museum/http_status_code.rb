@@ -1,0 +1,8 @@
+module MetMuseum
+  HTTP_OK_CODE = 200.freeze
+  HTTP_BAD_REQUEST_CODE = 400.freeze
+  HTTP_UNAUTHORIZED_CODE = 401.freeze
+  HTTP_FORBIDDEN_CODE = 403.freeze
+  HTTP_NOT_FOUND_CODE = 404.freeze
+  HTTP_UNPROCESSABLE_ENTITY_CODE = 429.freeze
+end
