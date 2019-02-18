@@ -83,6 +83,8 @@ module MetMuseum
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
 
+    private
+
     def error_class(response)
       case response.status
       when HTTP_BAD_REQUEST_CODE
