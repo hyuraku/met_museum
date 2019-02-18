@@ -1,27 +1,5 @@
 module MetMuseum
   class Collection
-    MetMuseumError = Class.new(StandardError)
-    BadRequestError = Class.new(MetMuseumError)
-    UnauthorizedError = Class.new(MetMuseumError)
-    ForbiddenError = Class.new(MetMuseumError)
-    ApiRequestsQuotaReachedError = Class.new(MetMuseumError)
-    NotFoundError = Class.new(MetMuseumError)
-    UnprocessableEntityError = Class.new(MetMuseumError)
-    ApiError = Class.new(MetMuseumError)
-
-    API_ENDPOINT = "https://collectionapi.metmuseum.org".freeze
-    PUBLIC_URI = "/public/collection/v1/objects".freeze
-    SEARCH_URI = "/public/collection/v1/search".freeze
-
-    HTTP_OK_CODE = 200.freeze
-
-    HTTP_BAD_REQUEST_CODE = 400.freeze
-    HTTP_UNAUTHORIZED_CODE = 401.freeze
-    HTTP_FORBIDDEN_CODE = 403.freeze
-    HTTP_NOT_FOUND_CODE = 404.freeze
-    HTTP_UNPROCESSABLE_ENTITY_CODE = 429.freeze
-
-
     # Return a listing of all valid Object IDs available to use
     # @param [String] metadataDate Returns any objects with updated data after this date
     # @return [Hash<total, Integer>] The total number of publicly-available objects
