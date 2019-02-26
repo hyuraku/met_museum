@@ -7,9 +7,7 @@ module MetMuseum
     def objects(metadataDate = nil)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get PUBLIC_URI, {:metadataDate => metadataDate}
-      return Oj.load(response.body) if response_successful?(response)
-
-      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+      return_response(response)
     end
 
     # returns a record for an object, containing all open access data about that object, including its image (if the image is available under Open Access)
@@ -66,9 +64,7 @@ module MetMuseum
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     def object(objectID)
       response = Faraday.get "#{API_ENDPOINT}#{PUBLIC_URI}/#{objectID}"
-      return Oj.load(response.body)if response_successful?(response)
-
-      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+      return_response(response)
     end
 
     # returns a listing of all Object IDs for objects that contain the search query within the object’s data
@@ -78,9 +74,7 @@ module MetMuseum
     def search(q)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get SEARCH_URI, {:q => q}
-      return Oj.load(response.body)if response_successful?(response)
-
-      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+      return_response(response)
     end
 
     private
@@ -105,6 +99,12 @@ module MetMuseum
 
     def response_successful?(response)
       response.status == HTTP_OK_CODE
+    end
+
+    def return_response(response)
+      return Oj.load(response.body)if response_successful?(response)
+
+      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
   end
 end
