@@ -5,6 +5,7 @@ module MetMuseum
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
     def objects(metadataDate = nil)
+      metadataDate = check_date_args(metadataDate) unless metadataDate.nil?
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get PUBLIC_URI, {:metadataDate => metadataDate}
       return_response(response)
@@ -71,9 +72,9 @@ module MetMuseum
     # @param [String] q Returns a listing of all Object IDs for objects that contain the search query within the object’s data
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
-    def search(q)
+    def search(query)
       conn = Faraday.new(:url => API_ENDPOINT)
-      response = conn.get SEARCH_URI, {:q => q}
+      response = conn.get SEARCH_URI, {:q => query}
       return_response(response)
     end
 
@@ -99,6 +100,18 @@ module MetMuseum
 
     def response_successful?(response)
       response.status == HTTP_OK_CODE
+    end
+
+    def check_date_args(date = nil)
+      case date.class.to_s
+      when "Date"
+        date = date.to_s
+      when "DateTime"
+        date = date.to_date.to_s
+      when "String"
+        date
+      end
+      date
     end
 
     def return_response(response)
