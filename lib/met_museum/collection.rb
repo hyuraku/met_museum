@@ -112,7 +112,7 @@ module MetMuseum
       case date.class.to_s
       when "Date"
         date = date.to_s
-      when "Datetime"
+      when "DateTime"
         date = date.to_date.to_s
       when "String"
         date

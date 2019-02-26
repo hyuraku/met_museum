@@ -17,6 +17,20 @@ RSpec.describe MetMuseum do
         end
       end
 
+      context "assign metadataDate" do
+        let(:metadataDate) {Date.new(2018,10,10)}
+        it "success with metadataDate" do
+          expect(objects["objectIDs"].size).to eq (objects["total"])
+        end
+      end
+
+      context "assign metadataDate" do
+        let(:metadataDate) {DateTime.new(2018,10,10)}
+        it "success with metadataDate" do
+          expect(objects["objectIDs"].size).to eq (objects["total"])
+        end
+      end
+
     end
 
     describe 'object' do
