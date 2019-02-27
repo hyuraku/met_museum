@@ -29,7 +29,7 @@ require 'met_museum'
 ```
 The description of the method is as follows
 
-MetMuseum::Collection.object
+MetMuseum::Collection.objects
 ```
 collection = MetMuseum::Collection.new()
 collection.objects
