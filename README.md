@@ -29,7 +29,6 @@ require 'met_museum'
 ```
 The description of the method is as follows
 
-
 MetMuseum::Collection.objects
 ```
 collection = MetMuseum::Collection.new()
@@ -44,6 +43,28 @@ collection.objects
   820613]}
 
 collection.objects('2018-10-10')
+=>{"total"=>88232,
+ "objectIDs"=>
+  [33,
+   35,
+   36,
+   74,
+   75,
+--< omit >--
+   820613]}
+
+ collection.objects(Date.new(2018,10,10))
+ =>{"total"=>88232,
+  "objectIDs"=>
+   [33,
+    35,
+    36,
+    74,
+    75,
+ --< omit >--
+    820613]}
+
+collection.objects(DateTime.new(2018,10,10))
 =>{"total"=>88232,
  "objectIDs"=>
   [33,
