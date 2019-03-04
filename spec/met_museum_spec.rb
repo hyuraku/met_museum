@@ -45,6 +45,20 @@ RSpec.describe MetMuseum do
           expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/#{objectID}")
         end
       end
+
+      context "Not Real objectID" do
+        let(:objectID) {0}
+        it "success with objectID" do
+          expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
+        end
+      end
+
+      context "Not enter objectID" do
+        let(:objectID) {nil}
+        it "success with objectID" do
+          expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
+        end
+      end
     end
 
     describe 'search' do
