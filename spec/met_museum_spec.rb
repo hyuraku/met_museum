@@ -6,6 +6,8 @@ RSpec.describe MetMuseum do
       context "all data" do
         let(:metadataDate) {nil}
         it "success" do
+          expect(objects["objectIDs"]).to be_truthy
+          expect(objects["total"]).to be_truthy
           expect(objects["objectIDs"].size).to eq (objects["total"])
         end
       end
@@ -14,6 +16,8 @@ RSpec.describe MetMuseum do
         context "String" do
           let(:metadataDate) {'2018-10-10'}
           it "success with metadataDate" do
+            expect(objects["objectIDs"]).to be_truthy
+            expect(objects["total"]).to be_truthy
             expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
@@ -21,6 +25,8 @@ RSpec.describe MetMuseum do
         context "Date" do
           let(:metadataDate) {Date.new(2018,10,10)}
           it "success with metadataDate" do
+            expect(objects["objectIDs"]).to be_truthy
+            expect(objects["total"]).to be_truthy
             expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
@@ -28,6 +34,8 @@ RSpec.describe MetMuseum do
         context "DateTime" do
           let(:metadataDate) {DateTime.new(2018,10,10)}
           it "success with metadataDate" do
+            expect(objects["objectIDs"]).to be_truthy
+            expect(objects["total"]).to be_truthy
             expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
@@ -66,6 +74,8 @@ RSpec.describe MetMuseum do
       context 'real query' do
         let(:q){"sunflowers"}
         it "successful search" do
+          expect(search["objectIDs"]).to be_truthy
+          expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
         end
       end
