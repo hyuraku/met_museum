@@ -1,3 +1,7 @@
+require "met_museum/api_expections"
+require "met_museum/endpoint"
+require "met_museum/http_status_code"
+
 module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
@@ -72,10 +76,12 @@ module MetMuseum
     # @param [String] query Returns a listing of all Object IDs for objects that contain the search query within the object’s data
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
-    def search(query)
+    def search(query, detail = false)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get SEARCH_URI, {:q => query}
-      return_response(response)
+      origin_response = return_response(response)
+      return origin_response unless detail
+      origin_response["objectIDs"].map{|id| object(id)}
     end
 
     private
