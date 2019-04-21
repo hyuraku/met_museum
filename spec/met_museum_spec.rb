@@ -71,12 +71,31 @@ RSpec.describe MetMuseum do
 
     describe 'search' do
       let(:search) {MetMuseum::Collection.new().search(q)}
+      let(:search_detail) {MetMuseum::Collection.new().search(q,show_number)}
       context 'real query' do
         let(:q){"sunflowers"}
         it "successful search" do
           expect(search["objectIDs"]).to be_truthy
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with detail-all' do
+        let(:q){"akasaka"}
+        let(:show_number){ 'all' }
+        it "successful search with detail all" do
+          expect(search_detail.size).to eq(9)
+          expect(search_detail.first).to be_truthy
+        end
+      end
+
+      context 'with detail-1' do
+        let(:q){"akasaka"}
+        let(:show_number){ 1 }
+        it "successful search with certain number" do
+          expect(search_detail.size).to eq(1)
+          expect(search_detail.first).to be_truthy
         end
       end
     end

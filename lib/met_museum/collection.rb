@@ -76,12 +76,13 @@ module MetMuseum
     # @param [String] query Returns a listing of all Object IDs for objects that contain the search query within the object’s data
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
-    def search(query, detail = false)
+    def search(query, show_number = 0)
       conn = Faraday.new(:url => API_ENDPOINT)
       response = conn.get SEARCH_URI, {:q => query}
       origin_response = return_response(response)
-      return origin_response unless detail
-      origin_response["objectIDs"].map{|id| object(id)}
+      return origin_response if show_number.to_i <= 0 && show_number != 'all'
+      show_number = origin_response['total'].to_i if show_number == 'all'
+      origin_response["objectIDs"][0..show_number - 1].map{|id| object(id)}
     end
 
     private
