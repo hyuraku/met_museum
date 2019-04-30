@@ -21,6 +21,13 @@ RSpec.describe MetMuseum do
             expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
+
+        context "not Date" do
+          let(:metadataDate) {DateTime.new(2018,10,10)}
+          it "success with metadataDate" do
+            expect{ objects["objectID"] }.to raise_error(MetMuseum::TypeError)
+          end
+        end
       end
     end
 

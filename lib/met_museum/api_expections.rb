@@ -7,4 +7,5 @@ module MetMuseum
   NotFoundError = Class.new(MetMuseumError)
   UnprocessableEntityError = Class.new(MetMuseumError)
   ApiError = Class.new(MetMuseumError)
+  TypeError = Class.new(MetMuseumError)
 end
