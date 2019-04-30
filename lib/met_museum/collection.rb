@@ -5,7 +5,7 @@ require "met_museum/http_status_code"
 module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
-    # @param [String] metadataDate Returns any objects with updated data after this date
+    # @param [Date] metadataDate Returns any objects with updated data after this date
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
     def objects(metadataDate = nil)
@@ -109,15 +109,13 @@ module MetMuseum
     end
 
     def check_date_args(date)
-      case date.class
-      when Date
-        return date.to_s
-      when DateTime
-        return date.to_date.to_s
-      when String
-        return date
+      if date.class == Date
+        begin
+          return date
+        rescue
+          p "Write Date type "
+        end
       end
-      date
     end
 
     def return_response(response)
