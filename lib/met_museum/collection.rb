@@ -111,9 +111,9 @@ module MetMuseum
     def check_date_args(date)
       if date.class == Date
         begin
-          return date
+          return date.to_s
         rescue
-          p "Write Date type "
+          "Write Date type "
         end
       end
     end
