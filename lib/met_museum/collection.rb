@@ -9,7 +9,7 @@ module MetMuseum
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
     def objects(metadataDate = nil)
-      metadataDate = check_date_args(metadataDate) unless metadataDate.nil?
+      metadataDate = check_date(metadataDate) unless metadataDate.nil?
       response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => metadataDate}
       return_response(response)
     end
@@ -108,18 +108,14 @@ module MetMuseum
       response.status == HTTP_OK_CODE
     end
 
-    def check_date_args(date)
-      if date.class == Date
-        begin
-          return date.to_s
-        rescue
-          "Write Date type "
-        end
-      end
+    def check_date(date)
+      return date.to_s if date.class == Date
+    
+      raise TypeError, "Write certain date"
     end
 
     def return_response(response)
-      return Oj.load(response.body)if response_successful?(response)
+      return Oj.load(response.body) if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
