@@ -5,13 +5,12 @@ require "met_museum/http_status_code"
 module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
-    # @param [String] metadataDate Returns any objects with updated data after this date
+    # @param [Date] metadataDate Returns any objects with updated data after this date
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
     def objects(metadataDate = nil)
       metadataDate = check_date_args(metadataDate) unless metadataDate.nil?
-      conn = Faraday.new(:url => API_ENDPOINT)
-      response = conn.get PUBLIC_URI, {:metadataDate => metadataDate}
+      response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => metadataDate}
       return_response(response)
     end
 
@@ -77,8 +76,8 @@ module MetMuseum
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     def search(query, show_number = 0)
-      conn = Faraday.new(:url => API_ENDPOINT)
-      response = conn.get SEARCH_URI, {:q => query}
+      response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query}
+      #error if show_number <= 0
       origin_response = return_response(response)
       return origin_response if show_number.to_i <= 0 && show_number != 'all'
       show_number = origin_response['total'].to_i if show_number == 'all'
@@ -109,16 +108,14 @@ module MetMuseum
       response.status == HTTP_OK_CODE
     end
 
-    def check_date_args(date = nil)
-      case date.class.to_s
-      when "Date"
-        date = date.to_s
-      when "DateTime"
-        date = date.to_date.to_s
-      when "String"
-        date
+    def check_date_args(date)
+      if date.class == Date
+        begin
+          return date.to_s
+        rescue
+          "Write Date type "
+        end
       end
-      date
     end
 
     def return_response(response)
