@@ -82,6 +82,8 @@ collection.objects(DateTime.new(2018,10,10))
 </pre>
 </details>
 
+***
+
 <details>
 <summary>
   MetMuseum::Collection.object
@@ -142,6 +144,8 @@ collection.object(1000)
 ```
 </pre>
 </details>
+
+***
 
 <details>
 <summary>
