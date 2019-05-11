@@ -1,5 +1,5 @@
 <img src="https://img.shields.io/travis/hyuraku/met_museum.svg"> <img src="https://img.shields.io/github/license/hyuraku/met_museum.svg">
- <img src="https://img.shields.io/gem/v/met_museum.svg"> <img src="http://inch-ci.org/github/hyuraku/met_museum.svg"> 
+ <img src="https://img.shields.io/gem/v/met_museum.svg"> <img src="http://inch-ci.org/github/hyuraku/met_museum.svg">
 # MetMuseum
 
 The Metropolitan Museum of Art Collection API Ruby wrapper
@@ -24,13 +24,19 @@ Or install it yourself as:
 
 ## Usage
 
-```
+```rb
 require 'met_museum'
 ```
+
 The description of the method is as follows
 
+<details>
+<summary>
 MetMuseum::Collection.objects
-```
+</summary>
+<div>
+
+```rb
 collection = MetMuseum::Collection.new()
 collection.objects
 => {"total"=>490607,
@@ -75,15 +81,20 @@ collection.objects(DateTime.new(2018,10,10))
 --< omit >--
    820613]}
 ```
+</div>
+</details>
+
+
 
 <details>
 <summary>
   MetMuseum::Collection.object
 </summary>
-<pre>
-```
+<div>
+
+```rb
 collection = MetMuseum::Collection.new()
-collection.object(1000)    
+collection.object(1000)
 => {"objectID"=>1000,
  "isHighlight"=>false,
  "accessionNumber"=>"10.149.99",
@@ -134,11 +145,17 @@ collection.object(1000)
  "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
  "tags"=>["Coat of Arms", "Dishes"]}
 ```
-</pre>
+</div>
 </details>
 
+<details class="sss">
+<summary>
 MetMuseum::Collection.search
-```
+</summary>
+<div>
+
+```rb
+# show object_ids size and themselves
 collection.search('ocean')
 => {"total"=>189,
  "objectIDs"=>
@@ -149,7 +166,63 @@ collection.search('ocean')
    8315,
    8317,
    --< omit >--
+
+# show specified number of objects 
+MetMuseum::Collection.search('akasaka', 1)
+=> [{"objectID"=>37231,
+  "isHighlight"=>false,
+  "accessionNumber"=>"JP787",
+  "isPublicDomain"=>true,
+  "primaryImage"=>"https://images.metmuseum.org/CRDImages/as/original/DP123261.jpg",
+  "primaryImageSmall"=>"https://images.metmuseum.org/CRDImages/as/web-large/DP123261.jpg",
+  "additionalImages"=>[],
+  "constituents"=>[{"role"=>"Artist", "name"=>"Utagawa Hiroshige"}],
+  "department"=>"Asian Art",
+  "objectName"=>"Print",
+  "title"=>"Akasaka",
+  "culture"=>"Japan",
+  "period"=>"Edo period (1615–1868)",
+  "dynasty"=>"",
+  "reign"=>"",
+  "portfolio"=>"",
+  "artistRole"=>"",
+  "artistPrefix"=>"",
+  "artistDisplayName"=>"",
+  "artistDisplayBio"=>"",
+  "artistSuffix"=>"",
+  "artistAlphaSort"=>"",
+  "artistNationality"=>"",
+  "artistBeginDate"=>"",
+  "artistEndDate"=>"",
+  "objectDate"=>"ca. 1840",
+  "objectBeginDate"=>1830,
+  "objectEndDate"=>1850,
+  "medium"=>"Polychrome woodblock print; ink and color on paper",
+  "dimensions"=>"Overall: 8 3/4 x 13 3/4in. (22.2 x 34.9cm)",
+  "creditLine"=>"The Francis Lathrop Collection, Purchase, Frederick C. Hewitt Fund, 1911",
+  "geographyType"=>"",
+  "city"=>"",
+  "state"=>"",
+  "county"=>"",
+  "country"=>"",
+  "region"=>"",
+  "subregion"=>"",
+  "locale"=>"",
+  "locus"=>"",
+  "excavation"=>"",
+  "river"=>"",
+  "classification"=>"Prints",
+  "rightsAndReproduction"=>"",
+  "linkResource"=>"",
+  "metadataDate"=>"2019-05-11T05:36:53.803Z",
+  "repository"=>"Metropolitan Museum of Art, New York, NY",
+  "objectURL"=>"https://www.metmuseum.org/art/collection/search/37231",
+  "tags"=>["Buildings", "Men", "Women"]}]
 ```
+</div>
+</details>
+
+***
 
 ## Contributing
 
