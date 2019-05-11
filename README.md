@@ -34,7 +34,9 @@ The description of the method is as follows
 <summary>
 MetMuseum::Collection.objects
 </summary>
-```
+<div>
+
+```rb
 collection = MetMuseum::Collection.new()
 collection.objects
 => {"total"=>490607,
@@ -79,14 +81,18 @@ collection.objects(DateTime.new(2018,10,10))
 --< omit >--
    820613]}
 ```
+</div>
 </details>
+
 
 
 <details>
 <summary>
   MetMuseum::Collection.object
 </summary>
-```
+<div>
+
+```rb
 collection = MetMuseum::Collection.new()
 collection.object(1000)
 => {"objectID"=>1000,
@@ -139,13 +145,17 @@ collection.object(1000)
  "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
  "tags"=>["Coat of Arms", "Dishes"]}
 ```
+</div>
 </details>
 
-<details>
+<details class="sss">
 <summary>
 MetMuseum::Collection.search
 </summary>
-```
+<div>
+
+```rb
+# show object_ids size and themselves
 collection.search('ocean')
 => {"total"=>189,
  "objectIDs"=>
@@ -157,6 +167,7 @@ collection.search('ocean')
    8317,
    --< omit >--
 
+# show specified number of objects 
 MetMuseum::Collection.search('akasaka', 1)
 => [{"objectID"=>37231,
   "isHighlight"=>false,
@@ -208,7 +219,10 @@ MetMuseum::Collection.search('akasaka', 1)
   "objectURL"=>"https://www.metmuseum.org/art/collection/search/37231",
   "tags"=>["Buildings", "Men", "Women"]}]
 ```
+</div>
 </details>
+
+***
 
 ## Contributing
 
