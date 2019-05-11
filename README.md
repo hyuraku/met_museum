@@ -24,17 +24,17 @@ Or install it yourself as:
 
 ## Usage
 
-```
+```rb
 require 'met_museum'
 ```
+
 The description of the method is as follows
 
 <details>
 <summary>
 MetMuseum::Collection.objects
 </summary>
-<pre>
-<code>
+```
 collection = MetMuseum::Collection.new()
 collection.objects
 => {"total"=>490607,
@@ -78,8 +78,7 @@ collection.objects(DateTime.new(2018,10,10))
    75,
 --< omit >--
    820613]}
-</code>
-</pre>
+```
 </details>
 
 
@@ -87,10 +86,9 @@ collection.objects(DateTime.new(2018,10,10))
 <summary>
   MetMuseum::Collection.object
 </summary>
-<pre>
-<code>
+```
 collection = MetMuseum::Collection.new()
-collection.object(1000)    
+collection.object(1000)
 => {"objectID"=>1000,
  "isHighlight"=>false,
  "accessionNumber"=>"10.149.99",
@@ -140,18 +138,14 @@ collection.object(1000)
  "repository"=>"Metropolitan Museum of Art, New York, NY",
  "objectURL"=>"https://www.metmuseum.org/art/collection/search/1000"}
  "tags"=>["Coat of Arms", "Dishes"]}
-</code>
-</pre>
+```
 </details>
-
-***
 
 <details>
 <summary>
 MetMuseum::Collection.search
 </summary>
-<pre>
-<code>
+```
 collection.search('ocean')
 => {"total"=>189,
  "objectIDs"=>
@@ -162,7 +156,6 @@ collection.search('ocean')
    8315,
    8317,
    --< omit >--
-
 
 MetMuseum::Collection.search('akasaka', 1)
 => [{"objectID"=>37231,
@@ -214,8 +207,7 @@ MetMuseum::Collection.search('akasaka', 1)
   "repository"=>"Metropolitan Museum of Art, New York, NY",
   "objectURL"=>"https://www.metmuseum.org/art/collection/search/37231",
   "tags"=>["Buildings", "Men", "Women"]}]
-</code>
-</pre>
+```
 </details>
 
 ## Contributing
