@@ -15,16 +15,16 @@ RSpec.describe MetMuseum do
       context "assign metadataDate" do
         context "Date" do
           let(:metadataDate) {Date.new(2018,10,10)}
-          it "success with metadataDate" do
+          it "success with DataType metadataDate" do
             expect(objects["objectIDs"]).to be_truthy
             expect(objects["total"]).to be_truthy
             expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
 
-        context "not Date" do
+        context "Datetime" do
           let(:metadataDate) {DateTime.new(2018,10,10)}
-          it "success with metadataDate" do
+          it "unsuccess with DatetimeType metadataDate" do
             expect{ objects["objectID"] }.to raise_error(MetMuseum::TypeError)
           end
         end
@@ -45,24 +45,24 @@ RSpec.describe MetMuseum do
 
       context "Not Real objectID" do
         let(:objectID) {0}
-        it "success with objectID" do
+        it "unsuccess with objectID" do
           expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
         end
       end
 
       context "Not enter objectID" do
         let(:objectID) {nil}
-        it "success with objectID" do
+        it "unsuccess with objectID" do
           expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
         end
       end
     end
 
     describe 'search' do
-      let(:search) {MetMuseum::Collection.new().search(q)}
-      let(:search_detail) {MetMuseum::Collection.new().search(q,show_number)}
+      let(:search) {MetMuseum::Collection.new().search(q,limit)}
       context 'real query' do
         let(:q){"sunflowers"}
+        let(:limit){ 0 }
         it "successful search" do
           expect(search["objectIDs"]).to be_truthy
           expect(search["total"]).to be_truthy
@@ -70,21 +70,12 @@ RSpec.describe MetMuseum do
         end
       end
 
-      context 'with detail-all' do
+      context 'with limit' do
         let(:q){"akasaka"}
-        let(:show_number){ 'all' }
-        it "successful search with detail all" do
-          expect(search_detail.size).to eq(9)
-          expect(search_detail.first).to be_truthy
-        end
-      end
-
-      context 'with detail-1' do
-        let(:q){"akasaka"}
-        let(:show_number){ 1 }
+        let(:limit){ 1 }
         it "successful search with certain number" do
-          expect(search_detail.size).to eq(1)
-          expect(search_detail.first).to be_truthy
+          expect(search.size).to eq(1)
+          expect(search.first).to be_truthy
         end
       end
     end

@@ -72,16 +72,16 @@ module MetMuseum
     end
 
     # returns a listing of all Object IDs for objects that contain the search query within the object’s data
-    # @param [String] query Returns a listing of all Object IDs for objects that contain the search query within the object’s data
+    # @param [String] query search term e.g. sunflowers
+    # @param [Interger] limit number of objects zthat contain the search query within the object’s data
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
-    def search(query, show_number = 0)
+    # @return [Array<>] objectIDs An array containing the object ID of publicly-available object
+    def search(query, limit = 0)
       response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query}
-      #error if show_number <= 0
       origin_response = return_response(response)
-      return origin_response if show_number.to_i <= 0 && show_number != 'all'
-      show_number = origin_response['total'].to_i if show_number == 'all'
-      origin_response["objectIDs"][0..show_number - 1].map{|id| object(id)}
+      return origin_response if limit <= 0
+      origin_response["objectIDs"][0..limit - 1].map{|id| object(id)}
     end
 
     private
