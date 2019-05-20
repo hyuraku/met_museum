@@ -6,11 +6,12 @@ module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
     # @param [Date] metadataDate Returns any objects with updated data after this date
+    # @params [Integer] departmentIds Returns any objects in a specific department
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
-    def objects(metadataDate = nil)
+    def objects(metadataDate = nil, departmentIds = nil)
       metadataDate = check_date(metadataDate) unless metadataDate.nil?
-      response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => metadataDate}
+      response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => metadataDate, :departmentIds => departmentIds}
       return_response(response)
     end
 
@@ -68,6 +69,11 @@ module MetMuseum
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     def object(objectID)
       response = Faraday.get "#{API_ENDPOINT}#{PUBLIC_URI}/#{objectID}"
+      return_response(response)
+    end
+
+    def department
+      response = Faraday.get "#{API_ENDPOINT}#{DEPARTMENTS_URI}"
       return_response(response)
     end
 
