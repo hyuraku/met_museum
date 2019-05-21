@@ -72,6 +72,10 @@ module MetMuseum
       return_response(response)
     end
 
+    # returns a listing of all departments
+    # @return [Array] departments An array containing the JSON objects that contain each department's departmentId and display name. The departmentId is to be used as a query parameter on the `/objects` endpoint
+    # @return [Integer] departments Department ID as an integer. The departmentId is to be used as a query parameter on the `/objects` endpoint
+    # @return [String] departments Display name for a department
     def department
       response = Faraday.get "#{API_ENDPOINT}#{DEPARTMENTS_URI}"
       return_response(response)
