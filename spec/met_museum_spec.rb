@@ -2,9 +2,10 @@ RSpec.describe MetMuseum do
 
   describe 'Collection' do
     describe 'objects' do
-      let(:objects) { MetMuseum::Collection.new().objects(metadataDate)}
+      let(:objects) { MetMuseum::Collection.new().objects(metadataDate,departmentIds)}
       context "all data" do
         let(:metadataDate) {nil}
+        let(:departmentIds) {nil}
         it "success" do
           expect(objects["objectIDs"]).to be_truthy
           expect(objects["total"]).to be_truthy
@@ -15,6 +16,7 @@ RSpec.describe MetMuseum do
       context "assign metadataDate" do
         context "Date" do
           let(:metadataDate) {Date.new(2018,10,10)}
+          let(:departmentIds) {nil}
           it "success with DataType metadataDate" do
             expect(objects["objectIDs"]).to be_truthy
             expect(objects["total"]).to be_truthy
@@ -24,8 +26,21 @@ RSpec.describe MetMuseum do
 
         context "Datetime" do
           let(:metadataDate) {DateTime.new(2018,10,10)}
+          let(:departmentIds) {nil}
           it "unsuccess with DatetimeType metadataDate" do
             expect{ objects["objectID"] }.to raise_error(MetMuseum::TypeError)
+          end
+        end
+      end
+
+      context "assign departmentIds" do
+        context "Date" do
+          let(:metadataDate) {nil}
+          let(:departmentIds) {11111}
+          it "success with DataType metadataDate" do
+            expect(objects["objectIDs"]).to be_truthy
+            expect(objects["total"]).to be_truthy
+            expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
       end
@@ -54,6 +69,15 @@ RSpec.describe MetMuseum do
         let(:objectID) {nil}
         it "unsuccess with objectID" do
           expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
+        end
+      end
+    end
+
+    describe 'departments' do
+      let(:department) {MetMuseum::Collection.new().department}
+      context 'all departments' do
+        it 'successful' do
+          expect(department["departments"].size).to eq(19)
         end
       end
     end

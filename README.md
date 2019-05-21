@@ -39,28 +39,17 @@ MetMuseum::Collection.objects
 ```rb
 collection = MetMuseum::Collection.new()
 collection.objects
-=> {"total"=>490607,
+=> {"total"=>494788,
  "objectIDs"=>
   [1,
    2,
    3,
    4,
 --< omit >--
-  820613]}
-
-collection.objects('2018-10-10')
-=>{"total"=>88232,
- "objectIDs"=>
-  [33,
-   35,
-   36,
-   74,
-   75,
---< omit >--
-   820613]}
+  826602]}
 
  collection.objects(Date.new(2018,10,10))
- =>{"total"=>88232,
+ =>{"total"=>355400,
   "objectIDs"=>
    [33,
     35,
@@ -68,18 +57,28 @@ collection.objects('2018-10-10')
     74,
     75,
  --< omit >--
-    820613]}
+    826307]}
 
-collection.objects(DateTime.new(2018,10,10))
-=>{"total"=>88232,
+collection.objects(nil,1)
+=> {"total"=>18572,
  "objectIDs"=>
-  [33,
-   35,
-   36,
-   74,
-   75,
---< omit >--
-   820613]}
+  [1,
+   2,
+   3,
+   4,
+ --< omit >--
+   821352]}
+
+collection.objects(Date.new(2018,10,10),1)
+=> {"total"=>15439,
+ "objectIDs"=>
+  [7,
+   8,
+   33,
+   34,
+ --< omit >--
+   816271]}
+
 ```
 </div>
 </details>
