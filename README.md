@@ -147,7 +147,29 @@ collection.object(1000)
 </div>
 </details>
 
-<details class="sss">
+<details>
+<summary>
+MetMuseum::Collection.department
+</summary>
+<div>
+
+```rb
+# show object_ids size and themselves
+collection.department
+=> {"departments"=>
+  [{"departmentId"=>1, "displayName"=>"American Decorative Arts"},
+   {"departmentId"=>3, "displayName"=>"Ancient Near Eastern Art"},
+   {"departmentId"=>4, "displayName"=>"Arms and Armor"},
+   {"departmentId"=>5, "displayName"=>"Arts of Africa, Oceania, and the Americas"},
+   {"departmentId"=>6, "displayName"=>"Asian Art"},
+   {"departmentId"=>7, "displayName"=>"The Cloisters"},
+   --< omit >--
+
+```
+</div>
+</details>
+
+<details>
 <summary>
 MetMuseum::Collection.search
 </summary>
