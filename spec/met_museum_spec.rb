@@ -49,12 +49,66 @@ RSpec.describe MetMuseum do
     describe 'object' do
       let(:object) { MetMuseum::Collection.new().object(objectID) }
       context "Real objectID" do
-        let(:objectID) {1000}
+        let(:objectID) {436535}
         it "success with objectID" do
           expect(object["objectID"]).to eq(objectID)
+          expect(object["isHighlight"]).to eq(true)
+          expect(object["accessionNumber"]).to eq("1993.132")
           expect(object["isPublicDomain"]).to eq(true)
-          expect(object["objectName"]).to eq("Bread plate")
-          expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/#{objectID}")
+          expect(object["primaryImage"]).to eq("https://images.metmuseum.org/CRDImages/ep/original/DT1567.jpg")
+          expect(object["primaryImageSmall"]).to eq("https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg")
+          expect(object["additionalImages"]).to eq ([
+            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-004.jpg",
+            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-003.jpg",
+            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-002.jpg",
+            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg",
+          ])
+          expect(object["constituents"]).to eq([
+            {
+              "role" => "Artist",
+              "name" => "Vincent van Gogh"
+            }
+          ])
+          expect(object["department"]).to eq("European Paintings")
+          expect(object["objectName"]).to eq("Painting")
+          expect(object["title"]).to eq("Wheat Field with Cypresses")
+          expect(object["culture"]).to eq("")
+          expect(object["period"]).to eq("")
+          expect(object["dynasty"]).to eq("")
+          expect(object["reign"]).to eq("")
+          expect(object["portfolio"]).to eq("")
+          expect(object["artistRole"]).to eq("Artist")
+          expect(object["artistPrefix"]).to eq("")
+          expect(object["artistDisplayName"]).to eq("Vincent van Gogh")
+          expect(object["artistDisplayBio"]).to eq("Dutch, Zundert 1853–1890 Auvers-sur-Oise")
+          expect(object["artistSuffix"]).to eq("")
+          expect(object["artistAlphaSort"]).to eq("Gogh, Vincent van")
+          expect(object["artistNationality"]).to eq("Dutch")
+          expect(object["artistBeginDate"]).to eq("1853")
+          expect(object["artistEndDate"]).to eq("1890")
+          expect(object["objectDate"]).to eq("1889")
+          expect(object["objectBeginDate"]).to eq(1889)
+          expect(object["objectEndDate"]).to eq(1889)
+          expect(object["medium"]).to eq("Oil on canvas")
+          expect(object["dimensions"]).to eq("28 7/8 × 36 3/4 in. (73.2 × 93.4 cm)")
+          expect(object["creditLine"]).to eq("Purchase, The Annenberg Foundation Gift, 1993")
+          expect(object["geographyType"]).to eq("")
+          expect(object["city"]).to eq("")
+          expect(object["state"]).to eq("")
+          expect(object["county"]).to eq("")
+          expect(object["country"]).to eq("")
+          expect(object["region"]).to eq("")
+          expect(object["subregion"]).to eq("")
+          expect(object["locale"]).to eq("")
+          expect(object["locus"]).to eq("")
+          expect(object["excavation"]).to eq("")
+          expect(object["river"]).to eq("")
+          expect(object["classification"]).to eq("Paintings")
+          expect(object["rightsAndReproduction"]).to eq("")
+          expect(object["linkResource"]).to eq("")
+          expect(object["repository"]).to eq("Metropolitan Museum of Art, New York, NY")
+          expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/436535")
+          expect(object["tags"]).to eq(["Landscapes","Cypresses","Summer"])
         end
       end
 
@@ -88,7 +142,6 @@ RSpec.describe MetMuseum do
         let(:q){"sunflowers"}
         let(:limit){ 0 }
         it "successful search" do
-          expect(search["objectIDs"]).to be_truthy
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
         end
