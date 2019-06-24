@@ -91,7 +91,7 @@ module MetMuseum
       response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query}
       origin_response = return_response(response)
       return origin_response if limit <= 0
-      origin_response["objectIDs"][0..limit - 1].map{|id| object(id)}
+      origin_response["objectIDs"][0..limit - 1].map{|id| MetMuseum::Collection.new.object(id)}
     end
 
     private
