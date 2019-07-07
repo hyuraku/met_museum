@@ -9,9 +9,14 @@ module MetMuseum
     # @params [Integer] departmentIds Returns any objects in a specific department
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
-    def objects(metadataDate = nil, departmentIds = nil)
-      metadataDate = check_date(metadataDate) unless metadataDate.nil?
-      response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => metadataDate, :departmentIds => departmentIds}
+    def objects(options = {})
+      default_options = {
+        metadataDate: nil,
+        departmentIds: nil
+      }
+      options = default_options.merge(options)
+      options[:metadataDate] = check_date(options[:metadataDate]) unless options[:metadataDate].nil?
+      response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]}
       return_response(response)
     end
 
@@ -120,7 +125,7 @@ module MetMuseum
 
     def check_date(date)
       return date.to_s if date.class == Date
-    
+
       raise TypeError, "Write certain date"
     end
 

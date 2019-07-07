@@ -48,7 +48,7 @@ collection.objects
 --< omit >--
   826602]}
 
- collection.objects(Date.new(2018,10,10))
+ collection.objects(metadataDate: Date.new(2018,10,10))
  =>{"total"=>355400,
   "objectIDs"=>
    [33,
@@ -59,7 +59,7 @@ collection.objects
  --< omit >--
     826307]}
 
-collection.objects(nil,1)
+collection.objects(departmentIds: 1)
 => {"total"=>18572,
  "objectIDs"=>
   [1,
@@ -69,7 +69,7 @@ collection.objects(nil,1)
  --< omit >--
    821352]}
 
-collection.objects(Date.new(2018,10,10),1)
+collection.objects(metadataDate: Date.new(2018,10,10),departmentIds: 1)
 => {"total"=>15439,
  "objectIDs"=>
   [7,
@@ -188,7 +188,7 @@ collection.search('ocean')
    8317,
    --< omit >--
 
-# show specified number of objects 
+# show specified number of objects
 MetMuseum::Collection.search('akasaka', 1)
 => [{"objectID"=>37231,
   "isHighlight"=>false,

@@ -2,7 +2,7 @@ RSpec.describe MetMuseum do
 
   describe 'Collection' do
     describe 'objects' do
-      let(:objects) { MetMuseum::Collection.new().objects(metadataDate,departmentIds)}
+      let(:objects) { MetMuseum::Collection.new().objects({metadataDate: metadataDate, departmentIds: departmentIds})}
       context "all data" do
         let(:metadataDate) {nil}
         let(:departmentIds) {nil}
