@@ -10,11 +10,10 @@ module MetMuseum
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
     def objects(options = {})
-      default_options = {
+      options = {
         metadataDate: nil,
         departmentIds: nil
-      }
-      options = default_options.merge(options)
+      }.merge(options)
       options[:metadataDate] = check_date(options[:metadataDate]) unless options[:metadataDate].nil?
       response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]}
       return_response(response)
@@ -89,14 +88,19 @@ module MetMuseum
     # returns a listing of all Object IDs for objects that contain the search query within the object’s data
     # @param [String] query search term e.g. sunflowers
     # @param [Interger] limit number of objects zthat contain the search query within the object’s data
+    # @param [Boolean] Returns objects that match the query and are designated as highlights. Highlights are selected works of art from The Met Museum’s permanent collection representing different cultures and time periods.
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
-    def search(query, limit = 0)
+    def search(query, options = {})
+      options = {
+        limit: 0,
+        isHighlight: false
+      }.merge(options)
       response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query}
       origin_response = return_response(response)
-      return origin_response if limit <= 0
-      origin_response["objectIDs"][0..limit - 1].map{|id| MetMuseum::Collection.new.object(id)}
+      return origin_response if options[:limit] <= 0
+      origin_response["objectIDs"][0..options[:limit] - 1].map{|id| MetMuseum::Collection.new.object(id)}
     end
 
     private
