@@ -92,8 +92,7 @@ collection.objects(metadataDate: Date.new(2018,10,10),departmentIds: 1)
 <div>
 
 ```rb
-collection = MetMuseum::Collection.new()
-collection.object(1000)
+MetMuseum::Collection.new.object(1000)
 => {"objectID"=>1000,
  "isHighlight"=>false,
  "accessionNumber"=>"10.149.99",
@@ -155,7 +154,7 @@ MetMuseum::Collection.department
 
 ```rb
 # show object_ids size and themselves
-collection.department
+MetMuseum::Collection.new.department
 => {"departments"=>
   [{"departmentId"=>1, "displayName"=>"American Decorative Arts"},
    {"departmentId"=>3, "displayName"=>"Ancient Near Eastern Art"},
@@ -177,7 +176,7 @@ MetMuseum::Collection.search
 
 ```rb
 # show object_ids size and themselves
-collection.search('ocean')
+MetMuseum::Collection.new.search('ocean')
 => {"total"=>189,
  "objectIDs"=>
   [250487,
@@ -189,7 +188,7 @@ collection.search('ocean')
    --< omit >--
 
 # show specified number of objects
-MetMuseum::Collection.search('akasaka', 1)
+MetMuseum::Collection.new.search('akasaka', {limit: 1})
 => [{"objectID"=>37231,
   "isHighlight"=>false,
   "accessionNumber"=>"JP787",
@@ -239,6 +238,11 @@ MetMuseum::Collection.search('akasaka', 1)
   "repository"=>"Metropolitan Museum of Art, New York, NY",
   "objectURL"=>"https://www.metmuseum.org/art/collection/search/37231",
   "tags"=>["Buildings", "Men", "Women"]}]
+
+
+# show specified number of objects
+MetMuseum::Collection.new.search('akasaka', {isHighlight: true})
+=> {"total"=>9, "objectIDs"=>[36572, 37231, 37023, 29953, 55713, 56937, 36708, 36958, 55684]}
 ```
 </div>
 </details>
