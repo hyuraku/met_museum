@@ -95,9 +95,10 @@ module MetMuseum
     def search(query, options = {})
       options = {
         limit: 0,
-        isHighlight: false
+        isHighlight: false,
+        departmentId: nil
       }.merge(options)
-      response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query}
+      response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query, :isHighlight => options[:isHighlight], :departmentId => options[:departmentId]}
       origin_response = return_response(response)
       return origin_response if options[:limit] <= 0
       origin_response["objectIDs"][0..options[:limit] - 1].map{|id| MetMuseum::Collection.new.object(id)}

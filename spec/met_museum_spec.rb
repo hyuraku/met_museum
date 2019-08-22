@@ -137,11 +137,12 @@ RSpec.describe MetMuseum do
     end
 
     describe 'search' do
-      let(:search) {MetMuseum::Collection.new().search(q,{limit: limit, isHighlight: isHighlight})}
+      let(:search) {MetMuseum::Collection.new().search(q, {limit: limit, isHighlight: isHighlight, departmentId: departmentId})}
+      let(:q){ "cat" }
+      let(:limit){ 0 }
+      let(:isHighlight){ false }        
+      let(:departmentId){ nil }
       context 'real query' do
-        let(:q){"sunflowers"}
-        let(:limit){ 0 }
-        let(:isHighlight){ false }
         it "successful search" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
@@ -149,9 +150,7 @@ RSpec.describe MetMuseum do
       end
 
       context 'with limit' do
-        let(:q){"akasaka"}
         let(:limit){ 1 }
-        let(:isHighlight){ false }
         it "successful search with certain number" do
           expect(search.size).to eq(1)
           expect(search.first).to be_truthy
@@ -159,9 +158,15 @@ RSpec.describe MetMuseum do
       end
 
       context 'with isHighlight' do
-        let(:q){"akasaka"}
-        let(:limit){ 0 }
         let(:isHighlight){ true }
+        it "successful search with certain number" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with departmentId' do        
+        let(:departmentId){ 12 }
         it "successful search with certain number" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
