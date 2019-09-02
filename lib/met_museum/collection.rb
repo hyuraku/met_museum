@@ -96,9 +96,23 @@ module MetMuseum
       options = {
         limit: 0,
         isHighlight: false,
-        departmentId: nil
+        departmentId: nil,
+        isOnView: nil,
+        artistOrCulture: nil,
+        medium: nil,
+        hasImages: nil,
+        geoLocation: nil,
       }.merge(options)
-      response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {:q => query, :isHighlight => options[:isHighlight], :departmentId => options[:departmentId]}
+      response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {
+        :q => query, 
+        :isHighlight => options[:isHighlight], 
+        :departmentId => options[:departmentId],
+        :isOnView => options[:isOnView],
+        :artistOrCulture => options[:artistOrCulture],
+        :medium => options[:medium],
+        :hasImages => options[:hasImages],
+        :geoLocation => options[:geoLocation]
+      }
       origin_response = return_response(response)
       return origin_response if options[:limit] <= 0
       origin_response["objectIDs"][0..options[:limit] - 1].map{|id| MetMuseum::Collection.new.object(id)}
