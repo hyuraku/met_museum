@@ -159,7 +159,7 @@ RSpec.describe MetMuseum do
 
       context 'with isHighlight' do
         let(:isHighlight){ true }
-        it "successful search with certain number" do
+        it "successful search with isHighlight" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
         end
@@ -167,7 +167,31 @@ RSpec.describe MetMuseum do
 
       context 'with departmentId' do        
         let(:departmentId){ 12 }
-        it "successful search with certain number" do
+        it "successful search with departmentId" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with isOnView' do
+        let(:isOnView){ true }
+        it "successful search with isOnView" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with artistOrCulture' do
+        let(:artistOrCulture){ true }
+        it "successful search with artistOrCulture" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with hasImages' do
+        let(:hasImages){ true }
+        it "successful search with hasImages" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
         end
