@@ -240,9 +240,62 @@ MetMuseum::Collection.new.search('akasaka', {limit: 1})
   "tags"=>["Buildings", "Men", "Women"]}]
 
 
-# show specified number of objects
-MetMuseum::Collection.new.search('akasaka', {isHighlight: true})
-=> {"total"=>9, "objectIDs"=>[36572, 37231, 37023, 29953, 55713, 56937, 36708, 36958, 55684]}
+# show object_ids size and themselves with certain departmentId --< omit >--
+MetMuseum::Collection.new.search('flower', {departmentId: 12})
+=> {"total"=>7922,
+ "objectIDs"=>
+  [207138,
+   197555,
+   207151,
+   206979,
+   --< omit >--
+
+# show object_ids size and themselves which are isOnView
+MetMuseum::Collection.new.search('flower', {isOnView: true})
+=> => {"total"=>2066,
+ "objectIDs"=>
+  [207138,
+   3689,
+   11207,
+   252906,
+   252349,
+   --< omit >--
+
+# show object_ids size and themselves which are artistOrCulture
+MetMuseum::Collection.new.search('flower', {artistOrCulture: true})
+=>  {"total"=>5, "objectIDs"=>[207138, 3689, 196563, 196560, 198662]}
+
+
+# show object_ids size and themselves with certain medium
+MetMuseum::Collection.new.search('flower', {medium: "Paintings"})
+=> {"total"=>706,
+ "objectIDs"=>
+  [11207,
+   436121,
+   10481,
+   435882,
+   --< omit >--
+
+
+# show object_ids size and themselves which are hasImages
+MetMuseum::Collection.new.search('flower', {hasImages: true})
+=> {"total"=>18731,
+ "objectIDs"=>
+  [207138,
+   3689,
+   11207,
+   252906,
+   --< omit >--
+
+# show object_ids size and themselves with certain geoLocation
+MetMuseum::Collection.new.search('flower', {geoLocation: "Paris"})
+=> {"total"=>292,
+ "objectIDs"=>
+  [195320,
+   707455,
+   193814,
+   200432,
+   --< omit >--
 ```
 </div>
 </details>
