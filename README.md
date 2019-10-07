@@ -296,6 +296,16 @@ MetMuseum::Collection.new.search('flower', {geoLocation: "Paris"})
    193814,
    200432,
    --< omit >--
+
+# show object_ids size and themselves with datarange
+MetMuseum::Collection.new.search('flower', {dateBegin: 1700,dateEnd: 1750})
+=> {"total"=>1444,
+ "objectIDs"=>
+  [9199,
+   3759,
+   398162,
+   666591,
+   --< omit >--
 ```
 </div>
 </details>
