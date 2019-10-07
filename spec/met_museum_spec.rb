@@ -212,6 +212,15 @@ RSpec.describe MetMuseum do
           expect(search["objectIDs"].size).to eq (search["total"])
         end
       end
+
+      context 'with dateBegin and dateEnd' do
+        let(:dateBegin){ Date.new(2017,10,10) }
+        let(:dateEnd){ Date.new(2018,10,10) }
+        it "successful search with dateBegin and dateEnd" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
     end
   end
 end

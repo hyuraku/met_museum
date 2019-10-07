@@ -14,7 +14,7 @@ module MetMuseum
         metadataDate: nil,
         departmentIds: nil
       }.merge(options)
-      options[:metadataDate] = check_date(options[:metadataDate]) unless options[:metadataDate].nil?
+      options[:metadataDate] = check_date(options[:metadataDate])
       response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]}
       return_response(response)
     end
@@ -102,6 +102,8 @@ module MetMuseum
         medium: nil,
         hasImages: nil,
         geoLocation: nil,
+        dateBegin: 0,
+        dateEnd: 2000
       }.merge(options)
       response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {
         :q => query, 
@@ -111,7 +113,9 @@ module MetMuseum
         :artistOrCulture => options[:artistOrCulture],
         :medium => options[:medium],
         :hasImages => options[:hasImages],
-        :geoLocation => options[:geoLocation]
+        :geoLocation => options[:geoLocation],
+        :dateBegin => options[:dateBegin],
+        :dateEnd => options[:dateEnd]
       }
       origin_response = return_response(response)
       return origin_response if options[:limit] <= 0
@@ -143,6 +147,7 @@ module MetMuseum
     end
 
     def check_date(date)
+      return nil if date.nil?
       return date.to_s if date.class == Date
 
       raise TypeError, "Write certain date"
