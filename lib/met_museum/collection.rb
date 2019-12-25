@@ -15,7 +15,7 @@ module MetMuseum
         departmentIds: nil
       }.merge(options)
       options[:metadataDate] = check_date(options[:metadataDate])
-      response = Faraday.new(:url => API_ENDPOINT).get PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]}
+      response = new_faraday(API_ENDPOINT, PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]})
       return_response(response)
     end
 
@@ -72,7 +72,7 @@ module MetMuseum
     # @return [Hash<objectURL, String>] URL to object's page on metmuseum.org
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     def object(objectID)
-      response = Faraday.get "#{API_ENDPOINT}#{PUBLIC_URI}/#{objectID}"
+      response = new_faraday(API_ENDPOINT, "#{PUBLIC_URI}/#{objectID}")
       return_response(response)
     end
 
@@ -81,7 +81,7 @@ module MetMuseum
     # @return [Integer] departments Department ID as an integer. The departmentId is to be used as a query parameter on the `/objects` endpoint
     # @return [String] departments Display name for a department
     def department
-      response = Faraday.get "#{API_ENDPOINT}#{DEPARTMENTS_URI}"
+      response = new_faraday(API_ENDPOINT, DEPARTMENTS_URI)
       return_response(response)
     end
 
@@ -105,9 +105,9 @@ module MetMuseum
         dateBegin: 0,
         dateEnd: 2000
       }.merge(options)
-      response = Faraday.new(:url => API_ENDPOINT).get SEARCH_URI, {
-        :q => query, 
-        :isHighlight => options[:isHighlight], 
+      response = new_faraday(API_ENDPOINT, SEARCH_URI, {
+        :q => query,
+        :isHighlight => options[:isHighlight],
         :departmentId => options[:departmentId],
         :isOnView => options[:isOnView],
         :artistOrCulture => options[:artistOrCulture],
@@ -116,13 +116,17 @@ module MetMuseum
         :geoLocation => options[:geoLocation],
         :dateBegin => options[:dateBegin],
         :dateEnd => options[:dateEnd]
-      }
+      })
       origin_response = return_response(response)
       return origin_response if options[:limit] <= 0
       origin_response["objectIDs"][0..options[:limit] - 1].map{|id| MetMuseum::Collection.new.object(id)}
     end
 
     private
+
+    def new_faraday(url, dir, params = nil)
+      Faraday.new(:url => url).get dir, params
+    end
 
     def error_class(response)
       case response.status
