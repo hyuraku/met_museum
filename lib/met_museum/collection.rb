@@ -6,6 +6,7 @@ module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
     # @param [Date] metadataDate Returns any objects with updated data after this date
+    # @param [DateTime] metadataDate Returns any objects with updated data after this date
     # @params [Integer] departmentIds Returns any objects in a specific department
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
@@ -152,7 +153,7 @@ module MetMuseum
 
     def check_date(date)
       return nil if date.nil?
-      return date.to_s if date.class == Date
+      return date.to_date.to_s if date.kind_of?(Date)
 
       raise TypeError, "Write certain date"
     end
