@@ -27,8 +27,10 @@ RSpec.describe MetMuseum do
         context "Datetime" do
           let(:metadataDate) {DateTime.new(2018,10,10)}
           let(:departmentIds) {nil}
-          it "unsuccess with DatetimeType metadataDate" do
-            expect{ objects["objectID"] }.to raise_error(MetMuseum::TypeError)
+          it "success with DataType metadataDate" do
+            expect(objects["objectIDs"]).to be_truthy
+            expect(objects["total"]).to be_truthy
+            expect(objects["objectIDs"].size).to eq (objects["total"])
           end
         end
       end
@@ -140,7 +142,7 @@ RSpec.describe MetMuseum do
       let(:search) {MetMuseum::Collection.new().search(q, {limit: limit, isHighlight: isHighlight, departmentId: departmentId})}
       let(:q){ "cat" }
       let(:limit){ 0 }
-      let(:isHighlight){ false }        
+      let(:isHighlight){ false }
       let(:departmentId){ nil }
       context 'real query' do
         it "successful search" do
@@ -165,7 +167,7 @@ RSpec.describe MetMuseum do
         end
       end
 
-      context 'with departmentId' do        
+      context 'with departmentId' do
         let(:departmentId){ 12 }
         it "successful search with departmentId" do
           expect(search["total"]).to be_truthy
