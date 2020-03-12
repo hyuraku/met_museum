@@ -72,6 +72,9 @@ module MetMuseum
     # @return [Hash<repository, String>]
     # @return [Hash<objectURL, String>] URL to object's page on metmuseum.org
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
+    # @return [Hash<objectWikidata_URL, string>] Wikidata URL for the object
+    # @return [Hash<isTimelineWork, boolean>] Whether the object is on the Timeline of Art History website
+    
     def object(objectID)
       response = new_faraday(API_ENDPOINT, "#{PUBLIC_URI}/#{objectID}")
       return_response(response)
@@ -112,9 +115,9 @@ module MetMuseum
         :departmentId => options[:departmentId],
         :isOnView => options[:isOnView],
         :artistOrCulture => options[:artistOrCulture],
-        :medium => options[:medium],
+        :medium => options[:medium]&.multi_option,
         :hasImages => options[:hasImages],
-        :geoLocation => options[:geoLocation],
+        :geoLocation => options[:geoLocation]&.multi_option,
         :dateBegin => options[:dateBegin],
         :dateEnd => options[:dateEnd]
       })
@@ -153,7 +156,7 @@ module MetMuseum
 
     def check_date(date)
       return nil if date.nil?
-      return date.to_date.to_s if date.kind_of?(Date)
+      return date.to_date.to_s if date.kind_of? Date
 
       raise TypeError, "Write certain date"
     end
@@ -162,6 +165,12 @@ module MetMuseum
       return Oj.load(response.body) if response_successful?(response)
 
       raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+    end
+
+    def multi_option
+      return self if self.kind_of? String
+      return self.join('|') if self.kind_of? Array
+      raise TypeError, "Write String or Array type"
     end
   end
 end
