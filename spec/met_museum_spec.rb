@@ -204,6 +204,14 @@ RSpec.describe MetMuseum do
         end
       end
 
+      context 'with multi medium' do
+        let(:medium){ ["Paintings", "Sculpture"]}
+        it "successful search with medium" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
       context 'with hasImages' do
         let(:hasImages){ true }
         it "successful search with hasImages" do
@@ -214,6 +222,14 @@ RSpec.describe MetMuseum do
 
       context 'with geoLocation' do
         let(:geoLocation){ "Paris" }
+        it "successful search with geoLocation" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with multi geoLocation' do
+        let(:geoLocation){ ["Paris", "China"] }
         it "successful search with geoLocation" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
