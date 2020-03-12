@@ -139,7 +139,6 @@ module MetMuseum
       when HTTP_UNAUTHORIZED_CODE
         UnauthorizedError
       when HTTP_FORBIDDEN_CODE
-        return ApiRequestsQuotaReachedError if api_requests_quota_reached?
         ForbiddenError
       when HTTP_NOT_FOUND_CODE
         NotFoundError
