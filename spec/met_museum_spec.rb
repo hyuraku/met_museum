@@ -66,9 +66,12 @@ RSpec.describe MetMuseum do
             "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg",
           ])
           expect(object["constituents"]).to eq([
-            {
-              "role" => "Artist",
-              "name" => "Vincent van Gogh"
+            { 
+              "constituentULAN_URL"=>"http://vocab.getty.edu/page/ulan/500115588", 
+              "constituentWikidata_URL"=>"https://www.wikidata.org/wiki/Q5582", 
+              "gender"=>"", 
+              "name"=>"Vincent van Gogh", 
+              "role"=>"Artist"
             }
           ])
           expect(object["department"]).to eq("European Paintings")
@@ -110,7 +113,9 @@ RSpec.describe MetMuseum do
           expect(object["linkResource"]).to eq("")
           expect(object["repository"]).to eq("Metropolitan Museum of Art, New York, NY")
           expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/436535")
-          expect(object["tags"]).to eq(["Landscapes","Cypresses","Summer"])
+          expect(object["tags"]).to eq([{"AAT_URL"=>"http://vocab.getty.edu/page/aat/300132294", "term"=>"Landscapes"},
+                                        {"AAT_URL"=>"http://vocab.getty.edu/page/aat/300343641", "term"=>"Cypresses"},
+                                        {"AAT_URL"=>"http://vocab.getty.edu/page/aat/300133099", "term"=>"Summer"}])
         end
       end
 
@@ -199,6 +204,14 @@ RSpec.describe MetMuseum do
         end
       end
 
+      context 'with multi medium' do
+        let(:medium){ ["Paintings", "Sculpture"]}
+        it "successful search with medium" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
       context 'with hasImages' do
         let(:hasImages){ true }
         it "successful search with hasImages" do
@@ -209,6 +222,14 @@ RSpec.describe MetMuseum do
 
       context 'with geoLocation' do
         let(:geoLocation){ "Paris" }
+        it "successful search with geoLocation" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq (search["total"])
+        end
+      end
+
+      context 'with multi geoLocation' do
+        let(:geoLocation){ ["Paris", "China"] }
         it "successful search with geoLocation" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq (search["total"])
