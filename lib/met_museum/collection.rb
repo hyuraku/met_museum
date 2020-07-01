@@ -10,11 +10,11 @@ module MetMuseum
     # @params [Integer] departmentIds Returns any objects in a specific department
     # @return [Hash<total, Integer>] The total number of publicly-available objects
     # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
-    def objects(options = {})
+    def objects(**args)
       options = {
         metadataDate: nil,
         departmentIds: nil
-      }.merge(options)
+      }.merge(args)
       options[:metadataDate] = check_date(options[:metadataDate])
       response = new_faraday(API_ENDPOINT, PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]})
       return_response(response)
@@ -96,7 +96,7 @@ module MetMuseum
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
-    def search(query, options = {})
+    def search(query, **args)
       options = {
         limit: 0,
         isHighlight: false,
@@ -108,7 +108,7 @@ module MetMuseum
         geoLocation: nil,
         dateBegin: 0,
         dateEnd: 2000
-      }.merge(options)
+      }.merge(args)
       response = new_faraday(API_ENDPOINT, SEARCH_URI, {
         :q => query,
         :isHighlight => options[:isHighlight],
