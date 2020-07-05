@@ -1,57 +1,56 @@
 RSpec.describe MetMuseum do
-
-  describe 'Collection' do
-    describe 'objects' do
-      let(:objects) { MetMuseum::Collection.new().objects({metadataDate: metadataDate, departmentIds: departmentIds})}
+  describe "Collection" do
+    describe "objects" do
+      let(:objects) { MetMuseum::Collection.new.objects({ metadataDate: metadataDate, departmentIds: departmentIds }) }
       context "all data" do
-        let(:metadataDate) {nil}
-        let(:departmentIds) {nil}
+        let(:metadataDate) { nil }
+        let(:departmentIds) { nil }
         it "success" do
           expect(objects["objectIDs"]).to be_truthy
           expect(objects["total"]).to be_truthy
-          expect(objects["objectIDs"].size).to eq (objects["total"])
+          expect(objects["objectIDs"].size).to eq objects["total"]
         end
       end
 
       context "assign metadataDate" do
         context "Date" do
-          let(:metadataDate) {Date.new(2018,10,10)}
-          let(:departmentIds) {nil}
+          let(:metadataDate) { Date.new(2018, 10, 10) }
+          let(:departmentIds) { nil }
           it "success with DataType metadataDate" do
             expect(objects["objectIDs"]).to be_truthy
             expect(objects["total"]).to be_truthy
-            expect(objects["objectIDs"].size).to eq (objects["total"])
+            expect(objects["objectIDs"].size).to eq objects["total"]
           end
         end
 
         context "Datetime" do
-          let(:metadataDate) {DateTime.new(2018,10,10)}
-          let(:departmentIds) {nil}
+          let(:metadataDate) { DateTime.new(2018, 10, 10) }
+          let(:departmentIds) { nil }
           it "success with DataType metadataDate" do
             expect(objects["objectIDs"]).to be_truthy
             expect(objects["total"]).to be_truthy
-            expect(objects["objectIDs"].size).to eq (objects["total"])
+            expect(objects["objectIDs"].size).to eq objects["total"]
           end
         end
       end
 
       context "assign departmentIds" do
         context "Date" do
-          let(:metadataDate) {nil}
-          let(:departmentIds) {11111}
+          let(:metadataDate) { nil }
+          let(:departmentIds) { 11111 }
           it "success with DataType metadataDate" do
             expect(objects["objectIDs"]).to be_truthy
             expect(objects["total"]).to be_truthy
-            expect(objects["objectIDs"].size).to eq (objects["total"])
+            expect(objects["objectIDs"].size).to eq objects["total"]
           end
         end
       end
     end
 
-    describe 'object' do
-      let(:object) { MetMuseum::Collection.new().object(objectID) }
+    describe "object" do
+      let(:object) { MetMuseum::Collection.new.object(objectID) }
       context "Real objectID" do
-        let(:objectID) {436535}
+        let(:objectID) { 436_535 }
         it "success with objectID" do
           expect(object["objectID"]).to eq(objectID)
           expect(object["isHighlight"]).to eq(true)
@@ -59,21 +58,21 @@ RSpec.describe MetMuseum do
           expect(object["isPublicDomain"]).to eq(true)
           expect(object["primaryImage"]).to eq("https://images.metmuseum.org/CRDImages/ep/original/DT1567.jpg")
           expect(object["primaryImageSmall"]).to eq("https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg")
-          expect(object["additionalImages"]).to eq ([
+          expect(object["additionalImages"]).to eq [
             "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-004.jpg",
             "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-003.jpg",
             "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-002.jpg",
-            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg",
-          ])
+            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg"
+          ]
           expect(object["constituents"]).to eq([
-            { 
-              "constituentULAN_URL"=>"http://vocab.getty.edu/page/ulan/500115588", 
-              "constituentWikidata_URL"=>"https://www.wikidata.org/wiki/Q5582", 
-              "gender"=>"", 
-              "name"=>"Vincent van Gogh", 
-              "role"=>"Artist"
-            }
-          ])
+                                                 {
+                                                   "constituentULAN_URL" => "http://vocab.getty.edu/page/ulan/500115588",
+                                                   "constituentWikidata_URL" => "https://www.wikidata.org/wiki/Q5582",
+                                                   "gender" => "",
+                                                   "name" => "Vincent van Gogh",
+                                                   "role" => "Artist"
+                                                 }
+                                               ])
           expect(object["department"]).to eq("European Paintings")
           expect(object["objectName"]).to eq("Painting")
           expect(object["title"]).to eq("Wheat Field with Cypresses")
@@ -113,135 +112,135 @@ RSpec.describe MetMuseum do
           expect(object["linkResource"]).to eq("")
           expect(object["repository"]).to eq("Metropolitan Museum of Art, New York, NY")
           expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/436535")
-          expect(object["tags"]).to eq([{"AAT_URL"=>"http://vocab.getty.edu/page/aat/300132294", "term"=>"Landscapes"},
-                                        {"AAT_URL"=>"http://vocab.getty.edu/page/aat/300343641", "term"=>"Cypresses"},
-                                        {"AAT_URL"=>"http://vocab.getty.edu/page/aat/300133099", "term"=>"Summer"}])
+          expect(object["tags"]).to eq([{ "AAT_URL" => "http://vocab.getty.edu/page/aat/300132294", "term" => "Landscapes" },
+                                        { "AAT_URL" => "http://vocab.getty.edu/page/aat/300343641", "term" => "Cypresses" },
+                                        { "AAT_URL" => "http://vocab.getty.edu/page/aat/300133099", "term" => "Summer" }])
         end
       end
 
       context "Not Real objectID" do
-        let(:objectID) {0}
+        let(:objectID) { 0 }
         it "unsuccess with objectID" do
-          expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
+          expect { object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
         end
       end
 
       context "Not enter objectID" do
-        let(:objectID) {nil}
+        let(:objectID) { nil }
         it "unsuccess with objectID" do
-          expect{ object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
+          expect { object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
         end
       end
     end
 
-    describe 'departments' do
-      let(:department) {MetMuseum::Collection.new().department}
-      context 'all departments' do
-        it 'successful' do
+    describe "departments" do
+      let(:department) { MetMuseum::Collection.new.department }
+      context "all departments" do
+        it "successful" do
           expect(department["departments"].size).to eq(19)
         end
       end
     end
 
-    describe 'search' do
-      let(:search) {MetMuseum::Collection.new().search(q, {limit: limit, isHighlight: isHighlight, departmentId: departmentId})}
-      let(:q){ "cat" }
-      let(:limit){ 0 }
-      let(:isHighlight){ false }
-      let(:departmentId){ nil }
-      context 'real query' do
+    describe "search" do
+      let(:search) { MetMuseum::Collection.new.search(q, { limit: limit, isHighlight: isHighlight, departmentId: departmentId }) }
+      let(:q) { "cat" }
+      let(:limit) { 0 }
+      let(:isHighlight) { false }
+      let(:departmentId) { nil }
+      context "real query" do
         it "successful search" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with limit' do
-        let(:limit){ 1 }
+      context "with limit" do
+        let(:limit) { 1 }
         it "successful search with certain number" do
           expect(search.size).to eq(1)
           expect(search.first).to be_truthy
         end
       end
 
-      context 'with isHighlight' do
-        let(:isHighlight){ true }
+      context "with isHighlight" do
+        let(:isHighlight) { true }
         it "successful search with isHighlight" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with departmentId' do
-        let(:departmentId){ 12 }
+      context "with departmentId" do
+        let(:departmentId) { 12 }
         it "successful search with departmentId" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with isOnView' do
-        let(:isOnView){ true }
+      context "with isOnView" do
+        let(:isOnView) { true }
         it "successful search with isOnView" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with artistOrCulture' do
-        let(:artistOrCulture){ true }
+      context "with artistOrCulture" do
+        let(:artistOrCulture) { true }
         it "successful search with artistOrCulture" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with medium' do
-        let(:medium){ "Paintings" }
+      context "with medium" do
+        let(:medium) { "Paintings" }
         it "successful search with medium" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with multi medium' do
-        let(:medium){ ["Paintings", "Sculpture"]}
+      context "with multi medium" do
+        let(:medium) { %w[Paintings Sculpture] }
         it "successful search with medium" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with hasImages' do
-        let(:hasImages){ true }
+      context "with hasImages" do
+        let(:hasImages) { true }
         it "successful search with hasImages" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with geoLocation' do
-        let(:geoLocation){ "Paris" }
+      context "with geoLocation" do
+        let(:geoLocation) { "Paris" }
         it "successful search with geoLocation" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with multi geoLocation' do
-        let(:geoLocation){ ["Paris", "China"] }
+      context "with multi geoLocation" do
+        let(:geoLocation) { %w[Paris China] }
         it "successful search with geoLocation" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context 'with dateBegin and dateEnd' do
-        let(:dateBegin){ Date.new(2017,10,10) }
-        let(:dateEnd){ Date.new(2018,10,10) }
+      context "with dateBegin and dateEnd" do
+        let(:dateBegin) { Date.new(2017, 10, 10) }
+        let(:dateEnd) { Date.new(2018, 10, 10) }
         it "successful search with dateBegin and dateEnd" do
           expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq (search["total"])
+          expect(search["objectIDs"].size).to eq search["total"]
         end
       end
     end
