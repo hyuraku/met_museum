@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 group :development do
-  gem 'pry'
+  gem "pry"
 end
 
 # Specify your gem's dependencies in met_museum.gemspec

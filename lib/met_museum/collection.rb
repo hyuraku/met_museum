@@ -16,7 +16,8 @@ module MetMuseum
         departmentIds: nil
       }.merge(args)
       options[:metadataDate] = check_date(options[:metadataDate])
-      response = new_faraday(API_ENDPOINT, PUBLIC_URI, {:metadataDate => options[:metadataDate], :departmentIds => options[:departmentIds]})
+      query = { metadataDate: options[:metadataDate], departmentIds: options[:departmentIds] }
+      response = new_faraday(API_ENDPOINT, PUBLIC_URI, query)
       return_response(response)
     end
 
@@ -74,9 +75,9 @@ module MetMuseum
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     # @return [Hash<objectWikidata_URL, string>] Wikidata URL for the object
     # @return [Hash<isTimelineWork, boolean>] Whether the object is on the Timeline of Art History website
-    
-    def object(objectID)
-      response = new_faraday(API_ENDPOINT, "#{PUBLIC_URI}/#{objectID}")
+
+    def object(object_id)
+      response = new_faraday(API_ENDPOINT, "#{PUBLIC_URI}/#{object_id}")
       return_response(response)
     end
 
@@ -96,7 +97,7 @@ module MetMuseum
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
-    def search(query, **args)
+    def search(q, **args)
       options = {
         limit: 0,
         isHighlight: false,
@@ -110,26 +111,27 @@ module MetMuseum
         dateEnd: 2000
       }.merge(args)
       response = new_faraday(API_ENDPOINT, SEARCH_URI, {
-        :q => query,
-        :isHighlight => options[:isHighlight],
-        :departmentId => options[:departmentId],
-        :isOnView => options[:isOnView],
-        :artistOrCulture => options[:artistOrCulture],
-        :medium => options[:medium]&.multi_option,
-        :hasImages => options[:hasImages],
-        :geoLocation => options[:geoLocation]&.multi_option,
-        :dateBegin => options[:dateBegin],
-        :dateEnd => options[:dateEnd]
-      })
+                               q: q,
+                               isHighlight: options[:isHighlight],
+                               departmentId: options[:departmentId],
+                               isOnView: options[:isOnView],
+                               artistOrCulture: options[:artistOrCulture],
+                               medium: options[:medium]&.multi_option,
+                               hasImages: options[:hasImages],
+                               geoLocation: options[:geoLocation]&.multi_option,
+                               dateBegin: options[:dateBegin],
+                               dateEnd: options[:dateEnd]
+                             })
       origin_response = return_response(response)
       return origin_response if options[:limit] <= 0
-      origin_response["objectIDs"][0..options[:limit] - 1].map{|id| MetMuseum::Collection.new.object(id)}
+
+      origin_response["objectIDs"][0..options[:limit] - 1].map { |id| MetMuseum::Collection.new.object(id) }
     end
 
     private
 
     def new_faraday(url, dir, params = nil)
-      Faraday.new(:url => url).get dir, params
+      Faraday.new(url: url).get dir, params
     end
 
     def error_class(response)
@@ -155,7 +157,7 @@ module MetMuseum
 
     def check_date(date)
       return nil if date.nil?
-      return date.to_date.to_s if date.kind_of? Date
+      return date.to_date.to_s if date.is_a? Date
 
       raise TypeError, "Write certain date"
     end
@@ -167,8 +169,9 @@ module MetMuseum
     end
 
     def multi_option
-      return self if self.kind_of? String
-      return self.join('|') if self.kind_of? Array
+      return self if is_a? String
+      return join("|") if is_a? Array
+
       raise TypeError, "Write String or Array type"
     end
   end

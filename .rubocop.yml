@@ -1,0 +1,13 @@
+Style/StringLiterals:
+  Enabled: true
+  EnforcedStyle: double_quotes
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Documentation:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: true
+  Max: 20
