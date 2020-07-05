@@ -37,7 +37,7 @@ RSpec.describe MetMuseum do
       context "assign departmentIds" do
         context "Date" do
           let(:metadataDate) { nil }
-          let(:departmentIds) { 11111 }
+          let(:departmentIds) { 11_111 }
           it "success with DataType metadataDate" do
             expect(objects["objectIDs"]).to be_truthy
             expect(objects["total"]).to be_truthy
@@ -112,9 +112,14 @@ RSpec.describe MetMuseum do
           expect(object["linkResource"]).to eq("")
           expect(object["repository"]).to eq("Metropolitan Museum of Art, New York, NY")
           expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/436535")
-          expect(object["tags"]).to eq([{ "AAT_URL" => "http://vocab.getty.edu/page/aat/300132294", "term" => "Landscapes" },
-                                        { "AAT_URL" => "http://vocab.getty.edu/page/aat/300343641", "term" => "Cypresses" },
-                                        { "AAT_URL" => "http://vocab.getty.edu/page/aat/300133099", "term" => "Summer" }])
+          expect(object["tags"]).to eq([{ "AAT_URL" => "http://vocab.getty.edu/page/aat/300132294",
+                                          "term" => "Landscapes" },
+                                        { "AAT_URL" => "http://vocab.getty.edu/page/aat/300343641",
+                                          "term" => "Cypresses" },
+                                        { "AAT_URL" => "http://vocab.getty.edu/page/aat/300133099",
+                                          "term" => "Summer" }])
+          expect(object["objectWikidata_URL"]).to eq "https://www.wikidata.org/wiki/Q18689458"
+          expect(object["isTimelineWork"]).to eq true
         end
       end
 
@@ -143,7 +148,11 @@ RSpec.describe MetMuseum do
     end
 
     describe "search" do
-      let(:search) { MetMuseum::Collection.new.search(q, { limit: limit, isHighlight: isHighlight, departmentId: departmentId }) }
+      let(:search) do
+        MetMuseum::Collection.new.search(q, { limit: limit,
+                                              isHighlight: isHighlight,
+                                              departmentId: departmentId })
+      end
       let(:q) { "cat" }
       let(:limit) { 0 }
       let(:isHighlight) { false }
