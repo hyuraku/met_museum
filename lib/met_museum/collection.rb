@@ -97,21 +97,10 @@ module MetMuseum
     # @return [Integer] total The total number of publicly-available objects
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
-    def search(q, **args)
-      options = {
-        limit: 0,
-        isHighlight: false,
-        departmentId: nil,
-        isOnView: nil,
-        artistOrCulture: nil,
-        medium: nil,
-        hasImages: nil,
-        geoLocation: nil,
-        dateBegin: 0,
-        dateEnd: 2000
-      }.merge(args)
+    def search(query, **args)
+      options = default_search_options.merge(args)
       response = new_faraday(API_ENDPOINT, SEARCH_URI, {
-                               q: q,
+                               q: query,
                                isHighlight: options[:isHighlight],
                                departmentId: options[:departmentId],
                                isOnView: options[:isOnView],
@@ -123,32 +112,16 @@ module MetMuseum
                                dateEnd: options[:dateEnd]
                              })
       origin_response = return_response(response)
-      return origin_response if options[:limit] <= 0
+      limit = options[:limit].to_i
+      return origin_response if limit <= 0
 
-      origin_response["objectIDs"][0..options[:limit] - 1].map { |id| MetMuseum::Collection.new.object(id) }
+      origin_response["objectIDs"][0..limit - 1].map { |id| MetMuseum::Collection.new.object(id) }
     end
 
     private
 
     def new_faraday(url, dir, params = nil)
       Faraday.new(url: url).get dir, params
-    end
-
-    def error_class(response)
-      case response.status
-      when HTTP_BAD_REQUEST_CODE
-        BadRequestError
-      when HTTP_UNAUTHORIZED_CODE
-        UnauthorizedError
-      when HTTP_FORBIDDEN_CODE
-        ForbiddenError
-      when HTTP_NOT_FOUND_CODE
-        NotFoundError
-      when HTTP_UNPROCESSABLE_ENTITY_CODE
-        UnprocessableEntityError
-      else
-        ApiError
-      end
     end
 
     def response_successful?(response)
@@ -165,7 +138,7 @@ module MetMuseum
     def return_response(response)
       return Oj.load(response.body) if response_successful?(response)
 
-      raise error_class(response), "Code: #{response.status}, response: #{response.body}"
+      raise MetMuseum.error_class(response), "Code: #{response.status}, response: #{response.body}"
     end
 
     def multi_option
@@ -173,6 +146,21 @@ module MetMuseum
       return join("|") if is_a? Array
 
       raise TypeError, "Write String or Array type"
+    end
+
+    def default_search_options
+      {
+        limit: 0,
+        isHighlight: false,
+        departmentId: nil,
+        isOnView: nil,
+        artistOrCulture: nil,
+        medium: nil,
+        hasImages: nil,
+        geoLocation: nil,
+        dateBegin: 0,
+        dateEnd: 2000
+      }
     end
   end
 end
