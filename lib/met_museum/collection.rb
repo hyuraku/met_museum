@@ -54,6 +54,8 @@ module MetMuseum
     # @return [Hash<objectEndDate, string>] Machine readable date indicating the year the artwork was completed (may be the same year or different year than the objectBeginDate)
     # @return [Hash<medium, string>] Refers to the materials that were used to create the artwork
     # @return [Hash<dimensions, string>] Size of the artwork or object
+    # @return [Hash<dimensionsParsed, Array<Hash>>] 	Size of the artwork or object in centimeters, parsed
+    # @return [Hash<measurements, Array<Hash>>] 	Array of elements, each with a name, description, and set of measurements. Spatial measurements are in centimeters; weights are in kg.
     # @return [Hash<creditLine, String>] 	Text acknowledging the source or origin of the artwork and the year the object was acquired by the museum.
     # @return [Hash<geographyType, String>] 	Qualifying information that describes the relationship of the place catalogued in the geography fields to the object that is being catalogued
     # @return [Hash<city, String>] City where the artwork was created
@@ -75,6 +77,7 @@ module MetMuseum
     # @return [Hash<tags,  Array<String>>] An array of subject keyword tags associated with the object
     # @return [Hash<objectWikidata_URL, string>] Wikidata URL for the object
     # @return [Hash<isTimelineWork, boolean>] Whether the object is on the Timeline of Art History website
+    # @return [Hash<GalleryNumber, string>] Gallery number, where available
 
     def object(object_id)
       response = new_faraday(API_ENDPOINT, "#{PUBLIC_URI}/#{object_id}")
@@ -102,6 +105,8 @@ module MetMuseum
       response = new_faraday(API_ENDPOINT, SEARCH_URI, {
                                q: query,
                                isHighlight: options[:isHighlight],
+                               title: options[:title],
+                               tags: options[:tags],
                                departmentId: options[:departmentId],
                                isOnView: options[:isOnView],
                                artistOrCulture: options[:artistOrCulture],
@@ -152,6 +157,8 @@ module MetMuseum
       {
         limit: 0,
         isHighlight: false,
+        title: true,
+        tags: true,
         departmentId: nil,
         isOnView: nil,
         artistOrCulture: nil,
