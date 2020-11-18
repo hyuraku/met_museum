@@ -66,6 +66,7 @@ RSpec.describe MetMuseum do
           ]
           expect(object["constituents"]).to eq([
                                                  {
+                                                   "constituentID"=>161947,
                                                    "constituentULAN_URL" => "http://vocab.getty.edu/page/ulan/500115588",
                                                    "constituentWikidata_URL" => "https://www.wikidata.org/wiki/Q5582",
                                                    "gender" => "",
@@ -95,6 +96,10 @@ RSpec.describe MetMuseum do
           expect(object["objectEndDate"]).to eq(1889)
           expect(object["medium"]).to eq("Oil on canvas")
           expect(object["dimensions"]).to eq("28 7/8 × 36 3/4 in. (73.2 × 93.4 cm)")
+          expect(object["dimensionsParsed"]).to eq(nil)
+          expect(object["measurements"]).to eq([{ "elementDescription"=>nil,
+                                                  "elementMeasurements"=>{"Height"=>73.34264, "Width"=>93.4}, 
+                                                  "elementName"=>"Overall"}])
           expect(object["creditLine"]).to eq("Purchase, The Annenberg Foundation Gift, 1993")
           expect(object["geographyType"]).to eq("")
           expect(object["city"]).to eq("")
@@ -114,14 +119,18 @@ RSpec.describe MetMuseum do
           expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/436535")
           expect(object["tags"]).to eq([
                                          { "AAT_URL" => "http://vocab.getty.edu/page/aat/300132294",
-                                           "term" => "Landscapes" },
+                                          "Wikidata_URL"=>"https://www.wikidata.org/wiki/Q191163",
+                                          "term" => "Landscapes" },
                                          { "AAT_URL" => "http://vocab.getty.edu/page/aat/300343641",
-                                           "term" => "Cypresses" },
+                                          "Wikidata_URL"=>"https://www.wikidata.org/wiki/Q146911", 
+                                          "term" => "Cypresses" },
                                          { "AAT_URL" => "http://vocab.getty.edu/page/aat/300133099",
-                                           "term" => "Summer" }
+                                          "Wikidata_URL"=>"https://www.wikidata.org/wiki/Q1313", 
+                                          "term" => "Summer" }
                                        ])
           expect(object["objectWikidata_URL"]).to eq "https://www.wikidata.org/wiki/Q18689458"
           expect(object["isTimelineWork"]).to eq true
+          expect(object["GalleryNumber"]).to eq "822"
         end
       end
 
@@ -181,6 +190,22 @@ RSpec.describe MetMuseum do
           expect(search["objectIDs"].size).to eq search["total"]
         end
       end
+
+      # context "with title" do
+      #   let(:title) { true }
+      #   it "successful search with title" do
+      #     expect(search["total"]).to be_truthy
+      #     expect(search["objectIDs"].size).to eq search["total"]
+      #   end
+      # end
+
+      # context "with tags" do
+      #   let(:tags) { true }
+      #   it "successful search with tags" do
+      #     expect(search["total"]).to be_truthy
+      #     expect(search["objectIDs"].size).to eq search["total"]
+      #   end
+      # end
 
       context "with departmentId" do
         let(:departmentId) { 12 }
