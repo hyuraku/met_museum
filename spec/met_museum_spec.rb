@@ -1,7 +1,7 @@
 RSpec.describe MetMuseum do
   describe "Collection" do
     describe "objects" do
-      let(:objects) { MetMuseum::Collection.new.objects({ metadataDate: metadataDate, departmentIds: departmentIds }) }
+      let(:objects) { MetMuseum::Collection.new.objects(**{ metadataDate: metadataDate, departmentIds: departmentIds }) }
       context "all data" do
         let(:metadataDate) { nil }
         let(:departmentIds) { nil }
@@ -160,14 +160,11 @@ RSpec.describe MetMuseum do
 
     describe "search" do
       let(:search) do
-        MetMuseum::Collection.new.search(q, { limit: limit,
-                                              isHighlight: isHighlight,
-                                              departmentId: departmentId })
+        MetMuseum::Collection.new.search(q, **options)
       end
+
       let(:q) { "cat" }
-      let(:limit) { 0 }
-      let(:isHighlight) { false }
-      let(:departmentId) { nil }
+      let(:options) { {} }
       context "real query" do
         it "successful search" do
           expect(search["total"]).to be_truthy
@@ -176,7 +173,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with limit" do
-        let(:limit) { 1 }
+        let(:options) { {limit: 1} }
         it "successful search with certain number" do
           expect(search.size).to eq(1)
           expect(search.first).to be_truthy
@@ -184,23 +181,23 @@ RSpec.describe MetMuseum do
       end
 
       context "with isHighlight" do
-        let(:isHighlight) { true }
+        let(:options) { {isHighlight: true} }
         it "successful search with isHighlight" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context "with title" do
-        let(:title) { true }
+      context "the the case title is false" do
+        let(:options) { {title: false} }
         it "successful search with title" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
         end
       end
 
-      context "with tags" do
-        let(:tags) { true }
+      context "with the case tags is false" do
+        let(:options) { {tags: false} }
         it "successful search with tags" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -208,7 +205,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with departmentId" do
-        let(:departmentId) { 12 }
+        let(:options) { {departmentId: 12} }
         it "successful search with departmentId" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -216,7 +213,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with isOnView" do
-        let(:isOnView) { true }
+        let(:options) { {isOnView: true} }
         it "successful search with isOnView" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -224,7 +221,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with artistOrCulture" do
-        let(:artistOrCulture) { true }
+        let(:options) { {artistOrCulture: true} }
         it "successful search with artistOrCulture" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -232,7 +229,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with medium" do
-        let(:medium) { "Paintings" }
+        let(:options) { {medium: "Paintings"} }
         it "successful search with medium" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -248,7 +245,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with hasImages" do
-        let(:hasImages) { true }
+        let(:options) { {hasImages: true} }
         it "successful search with hasImages" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -256,7 +253,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with geoLocation" do
-        let(:geoLocation) { "Paris" }
+        let(:options) { {geoLocation: "Paris"} }
         it "successful search with geoLocation" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -264,7 +261,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with multi geoLocation" do
-        let(:geoLocation) { %w[Paris China] }
+        let(:options) { {geoLocation: %w[Paris China]} }
         it "successful search with geoLocation" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
@@ -272,8 +269,7 @@ RSpec.describe MetMuseum do
       end
 
       context "with dateBegin and dateEnd" do
-        let(:dateBegin) { Date.new(2017, 10, 10) }
-        let(:dateEnd) { Date.new(2018, 10, 10) }
+        let(:options) { {dateBegin: 1000, dateEnd: 2018 } }
         it "successful search with dateBegin and dateEnd" do
           expect(search["total"]).to be_truthy
           expect(search["objectIDs"].size).to eq search["total"]
