@@ -191,21 +191,21 @@ RSpec.describe MetMuseum do
         end
       end
 
-      # context "with title" do
-      #   let(:title) { true }
-      #   it "successful search with title" do
-      #     expect(search["total"]).to be_truthy
-      #     expect(search["objectIDs"].size).to eq search["total"]
-      #   end
-      # end
+      context "with title" do
+        let(:title) { true }
+        it "successful search with title" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq search["total"]
+        end
+      end
 
-      # context "with tags" do
-      #   let(:tags) { true }
-      #   it "successful search with tags" do
-      #     expect(search["total"]).to be_truthy
-      #     expect(search["objectIDs"].size).to eq search["total"]
-      #   end
-      # end
+      context "with tags" do
+        let(:tags) { true }
+        it "successful search with tags" do
+          expect(search["total"]).to be_truthy
+          expect(search["objectIDs"].size).to eq search["total"]
+        end
+      end
 
       context "with departmentId" do
         let(:departmentId) { 12 }

@@ -101,23 +101,10 @@ module MetMuseum
     # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
     # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
     def search(query, **args)
-      options = default_search_options.merge(args)
-      response = new_faraday(API_ENDPOINT, SEARCH_URI, {
-                               q: query,
-                               isHighlight: options[:isHighlight],
-                               title: options[:title],
-                               tags: options[:tags],
-                               departmentId: options[:departmentId],
-                               isOnView: options[:isOnView],
-                               artistOrCulture: options[:artistOrCulture],
-                               medium: options[:medium]&.multi_option,
-                               hasImages: options[:hasImages],
-                               geoLocation: options[:geoLocation]&.multi_option,
-                               dateBegin: options[:dateBegin],
-                               dateEnd: options[:dateEnd]
-                             })
+      args.merge!({q: query})
+      response = new_faraday(API_ENDPOINT, SEARCH_URI, args)
       origin_response = return_response(response)
-      limit = options[:limit].to_i
+      limit = args[:limit].to_i
       return origin_response if limit <= 0
 
       origin_response["objectIDs"][0..limit - 1].map { |id| MetMuseum::Collection.new.object(id) }
@@ -151,23 +138,6 @@ module MetMuseum
       return join("|") if is_a? Array
 
       raise TypeError, "Write String or Array type"
-    end
-
-    def default_search_options
-      {
-        limit: 0,
-        isHighlight: false,
-        title: true,
-        tags: true,
-        departmentId: nil,
-        isOnView: nil,
-        artistOrCulture: nil,
-        medium: nil,
-        hasImages: nil,
-        geoLocation: nil,
-        dateBegin: 0,
-        dateEnd: 2000
-      }
     end
   end
 end
