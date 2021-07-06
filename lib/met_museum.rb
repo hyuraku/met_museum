@@ -1,6 +1,3 @@
-require "faraday"
-require "oj"
-
 require "met_museum/collection"
 require "met_museum/version"
 

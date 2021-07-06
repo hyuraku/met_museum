@@ -2,6 +2,9 @@ require "met_museum/api_expections"
 require "met_museum/endpoint"
 require "met_museum/http_status_code"
 
+require "faraday"
+require "oj"
+
 module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
