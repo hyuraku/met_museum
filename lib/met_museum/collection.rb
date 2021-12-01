@@ -18,10 +18,11 @@ module MetMuseum
         metadataDate: nil,
         departmentIds: nil
       }.merge(args)
+
       options[:metadataDate] = check_date(options[:metadataDate])
       query = { metadataDate: options[:metadataDate], departmentIds: options[:departmentIds] }
-      response = new_faraday(API_ENDPOINT, PUBLIC_URI, query)
-      return_response(response)
+      response = create_request(API_ENDPOINT, PUBLIC_URI, query)
+      arrange_response(response)
     end
 
     # returns a record for an object, containing all open access data about that object, including its image (if the image is available under Open Access)
@@ -83,8 +84,8 @@ module MetMuseum
     # @return [Hash<GalleryNumber, string>] Gallery number, where available
 
     def object(object_id)
-      response = new_faraday(API_ENDPOINT, "#{PUBLIC_URI}/#{object_id}")
-      return_response(response)
+      response = create_request(API_ENDPOINT, "#{PUBLIC_URI}/#{object_id}")
+      arrange_response(response)
     end
 
     # returns a listing of all departments
@@ -92,8 +93,8 @@ module MetMuseum
     # @return [Integer] departments Department ID as an integer. The departmentId is to be used as a query parameter on the `/objects` endpoint
     # @return [String] departments Display name for a department
     def department
-      response = new_faraday(API_ENDPOINT, DEPARTMENTS_URI)
-      return_response(response)
+      response = create_request(API_ENDPOINT, DEPARTMENTS_URI)
+      arrange_response(response)
     end
 
     # returns a listing of all Object IDs for objects that contain the search query within the object’s data
@@ -105,8 +106,8 @@ module MetMuseum
     # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
     def search(query, **args)
       args.merge!({q: query})
-      response = new_faraday(API_ENDPOINT, SEARCH_URI, args)
-      origin_response = return_response(response)
+      response = create_request(API_ENDPOINT, SEARCH_URI, args)
+      origin_response = arrange_response(response)
       limit = args[:limit].to_i
       return origin_response if limit <= 0
 
@@ -115,7 +116,7 @@ module MetMuseum
 
     private
 
-    def new_faraday(url, dir, params = nil)
+    def create_request(url, dir, params = nil)
       Faraday.new(url: url).get dir, params
     end
 
@@ -130,7 +131,7 @@ module MetMuseum
       raise TypeError, "Write certain date"
     end
 
-    def return_response(response)
+    def arrange_response(response)
       return Oj.load(response.body) if response_successful?(response)
 
       raise MetMuseum.error_class(response), "Code: #{response.status}, response: #{response.body}"
