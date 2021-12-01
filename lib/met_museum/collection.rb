@@ -111,7 +111,7 @@ module MetMuseum
       limit = args[:limit].to_i
       return origin_response if limit <= 0
 
-      origin_response["objectIDs"][0..limit - 1].map { |id| MetMuseum::Collection.new.object(id) }
+      origin_response["objectIDs"].lazy.map { |id| MetMuseum::Collection.new.object(id) }.first(limit)
     end
 
     private
