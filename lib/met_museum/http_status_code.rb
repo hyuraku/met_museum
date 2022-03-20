@@ -6,8 +6,8 @@ module MetMuseum
   HTTP_NOT_FOUND_CODE = 404
   HTTP_UNPROCESSABLE_ENTITY_CODE = 429
 
-  def self.error_class(response)
-    case response.status
+  def self.error_class(response_code)
+    case response_code
     when HTTP_BAD_REQUEST_CODE
       BadRequestError
     when HTTP_UNAUTHORIZED_CODE
