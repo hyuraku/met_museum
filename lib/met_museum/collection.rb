@@ -2,7 +2,6 @@ require "met_museum/api_expections"
 require "met_museum/endpoint"
 require "met_museum/http_status_code"
 
-require "faraday"
 require "oj"
 
 module MetMuseum
@@ -116,12 +115,17 @@ module MetMuseum
 
     private
 
-    def create_request(url, dir, params = nil)
-      Faraday.new(url: url).get dir, params
+    def create_request(url, dir, params = {})
+      require 'uri'
+      require 'net/http'
+
+      uri = URI.join(url, dir)
+      uri.query = URI.encode_www_form(params)
+      Net::HTTP.get_response(uri)
     end
 
-    def response_successful?(response)
-      response.status == HTTP_OK_CODE
+    def response_successful?(response_code)
+      response_code == HTTP_OK_CODE
     end
 
     def check_date(date)
@@ -132,9 +136,10 @@ module MetMuseum
     end
 
     def arrange_response(response)
-      return Oj.load(response.body) if response_successful?(response)
+      response_code = response.code.to_i
+      return Oj.load(response.body) if response_successful?(response_code)
 
-      raise MetMuseum.error_class(response), "Code: #{response.status}, response: #{response.body}"
+      raise MetMuseum.error_class(response_code), "Code: #{response_code}, response: #{response.body}"
     end
 
     def multi_option
