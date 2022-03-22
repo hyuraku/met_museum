@@ -2,8 +2,6 @@ require "met_museum/api_expections"
 require "met_museum/endpoint"
 require "met_museum/http_status_code"
 
-require "oj"
-
 module MetMuseum
   class Collection
     # Return a listing of all valid Object IDs available to use
@@ -137,7 +135,8 @@ module MetMuseum
 
     def arrange_response(response)
       response_code = response.code.to_i
-      return Oj.load(response.body) if response_successful?(response_code)
+      require 'json'
+      return JSON.parse(response.body) if response_successful?(response_code)
 
       raise MetMuseum.error_class(response_code), "Code: #{response_code}, response: #{response.body}"
     end
