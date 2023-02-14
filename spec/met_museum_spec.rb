@@ -100,8 +100,8 @@ RSpec.describe MetMuseum do
           expect(object["measurements"]).to eq([{ "elementDescription"=>nil,
                                                   "elementMeasurements"=>{"Height"=>73.34264, "Width"=>93.4}, 
                                                   "elementName"=>"Overall"},
-                                                { "elementDescription"=>nil,
-                                                  "elementMeasurements"=>{"Height"=>75.24765, "Width"=>94.29769},
+                                                { "elementDescription"=>"See Notes in Description",
+                                                  "elementMeasurements"=>{"Height"=>75.24765, "Width"=>94.93269},
                                                   "elementName"=>"Glazing"}])
           expect(object["creditLine"]).to eq("Purchase, The Annenberg Foundation Gift, 1993")
           expect(object["geographyType"]).to eq("")
