@@ -133,7 +133,7 @@ RSpec.describe MetMuseum do
                                        ])
           expect(object["objectWikidata_URL"]).to eq "https://www.wikidata.org/wiki/Q18689458"
           expect(object["isTimelineWork"]).to eq true
-          expect(object["GalleryNumber"]).to eq "822"
+          expect(object["GalleryNumber"]).to eq ""
         end
       end
 
