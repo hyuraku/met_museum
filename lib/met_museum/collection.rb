@@ -1,14 +1,15 @@
 require "met_museum/endpoint"
 require "met_museum/http_status_code"
+require "json"
 
 module MetMuseum
   class Collection
-    # Return a listing of all valid Object IDs available to use
-    # @param [Date] metadataDate Returns any objects with updated data after this date
-    # @param [DateTime] metadataDate Returns any objects with updated data after this date
-    # @params [Integer] departmentIds Returns any objects in a specific department
-    # @return [Hash<total, Integer>] The total number of publicly-available objects
-    # @return [Hash<objectIDs, Array<Integer>>] An array containing the object ID of publicly-available object
+    # Returns a listing of all valid Object IDs available to use based on the given parameters.
+    # @param [Date, DateTime] metadataDate Returns objects with updated data after this date.
+    # @param [Integer] departmentIds Returns objects in a specific department.
+    # @return [Hash<Symbol, Object>] A hash containing two keys:
+    #   - :total (Integer): The total number of publicly-available objects.
+    #   - :objectIDs (Array<Integer>): An array containing the object ID of publicly-available objects.
     def objects(**args)
       options = {
         metadataDate: nil,
@@ -93,13 +94,13 @@ module MetMuseum
       arrange_response(response)
     end
 
-    # returns a listing of all Object IDs for objects that contain the search query within the object’s data
-    # @param [String] query search term e.g. sunflowers
-    # @param [Interger] limit number of objects zthat contain the search query within the object’s data
-    # @param [Boolean] Returns objects that match the query and are designated as highlights. Highlights are selected works of art from The Met Museum’s permanent collection representing different cultures and time periods.
-    # @return [Integer] total The total number of publicly-available objects
-    # @return [Array<Integer>] objectIDs An array containing the object ID of publicly-available object
-    # @return [Array<Object>] objects An array containing the objects that contain the search query within the object’s data
+    # Retrieves a list of all Object IDs for objects that contain the given search term within the object’s data
+    # @param [String] query The search term to look for (e.g. "sunflowers")
+    # @param [Integer] limit The maximum number of objects to return
+    # @param [Boolean] include_highlights If true, returns objects that match the query and are designated as highlights. Highlights are selected works of art from The Met Museum’s permanent collection representing different cultures and time periods.
+    # @return [Integer] total The total number of publicly-available objects that match the search term
+    # @return [Array<Integer>] objectIDs An array containing the object ID of each publicly-available object that matches the search term
+    # @return [Array<Object>] objects An array containing the objects that contain the search term within the object’s data
     def search(query, **args)
       args.merge!({q: query})
       response = create_request(API_ENDPOINT, SEARCH_URI, args)
@@ -112,13 +113,18 @@ module MetMuseum
 
     private
 
-    def create_request(url, dir, params = {})
-      require 'uri'
-      require 'net/http'
+    require 'uri'
+    require 'net/http'
 
+    def create_request(url, dir, params = {})
       uri = URI.join(url, dir)
       uri.query = URI.encode_www_form(params)
-      Net::HTTP.get_response(uri)
+
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true if uri.scheme == 'https'
+
+      request = Net::HTTP::Get.new(uri.request_uri)
+      http.request(request)
     end
 
     def response_successful?(response_code)
@@ -126,25 +132,33 @@ module MetMuseum
     end
 
     def check_date(date)
-      return nil if date.nil?
-      return date.to_date.to_s if date.is_a? Date
-
-      raise TypeError, "Write certain date"
+      case date
+      when nil
+        nil
+      when Date
+        date.to_date.to_s
+      else
+        raise TypeError, "Please provide a valid date"
+      end
     end
 
     def arrange_response(response)
       response_code = response.code.to_i
-      require 'json'
-      return JSON.parse(response.body) if response_successful?(response_code)
-
-      raise MetMuseum.error_class(response_code), "Code: #{response_code}, response: #{response.body}"
+      unless response_successful?(response_code)
+        raise MetMuseum.error_class(response_code), "Code: #{response_code}, response: #{response.body}"
+      end
+      JSON.parse(response.body)
     end
 
     def multi_option
-      return self if is_a? String
-      return join("|") if is_a? Array
-
-      raise TypeError, "Write String or Array type"
+      case self
+      when String
+        return self
+      when Array
+        return join("|")
+      else
+        raise TypeError, "Write String or Array type"
+      end
     end
   end
 end
