@@ -85,10 +85,12 @@ module MetMuseum
       arrange_response(response)
     end
 
-    # returns a listing of all departments
-    # @return [Array] departments An array containing the JSON objects that contain each department's departmentId and display name. The departmentId is to be used as a query parameter on the `/objects` endpoint
-    # @return [Integer] departments Department ID as an integer. The departmentId is to be used as a query parameter on the `/objects` endpoint
-    # @return [String] departments Display name for a department
+    # Returns a listing of all departments
+    # @return [Array<Hash>] departments An array containing the JSON objects that contain each department's departmentId and display name.
+    #         The departmentId is to be used as a query parameter on the `/objects` endpoint
+    # @return [Integer] department_id Department ID as an integer.
+    #         The departmentId is to be used as a query parameter on the `/objects` endpoint
+    # @return [String] display_name Display name for a department
     def department
       response = create_request(API_ENDPOINT, DEPARTMENTS_URI)
       arrange_response(response)
@@ -101,14 +103,15 @@ module MetMuseum
     # @return [Integer] total The total number of publicly-available objects that match the search term
     # @return [Array<Integer>] objectIDs An array containing the object ID of each publicly-available object that matches the search term
     # @return [Array<Object>] objects An array containing the objects that contain the search term within the object’s data
-    def search(query, **args)
-      args.merge!({q: query})
+    def search(query, limit: nil, **args)
+      args[:q] = query
       response = create_request(API_ENDPOINT, SEARCH_URI, args)
       origin_response = arrange_response(response)
-      limit = args[:limit].to_i
-      return origin_response if limit <= 0
 
-      origin_response["objectIDs"].lazy.map { |id| MetMuseum::Collection.new.object(id) }.first(limit)
+      return origin_response if limit.nil? || limit <= 0
+
+      object_ids = origin_response["objectIDs"].take(limit)
+      object_ids.map { |id| MetMuseum::Collection.new.object(id) }
     end
 
     private
