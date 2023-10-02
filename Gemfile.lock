@@ -62,6 +62,3 @@ DEPENDENCIES
   rspec (~> 3.0)
   rspec-retry
   rubocop
-
-BUNDLED WITH
-   2.0.2
