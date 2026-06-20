@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://collectionapi.metmuseum.org/public/collection/v1/search?artistOrCulture=true&q=cat
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      X-Powered-By:
+      - ARR/3.0
+      - ASP.NET
+      Date:
+      - Sat, 20 Jun 2026 08:35:54 GMT
+      Set-Cookie:
+      - incap_ses_442_1662004=1gjvfCXuJxakZT/cuEwiBupQNmoAAAAAXLhsxkT654uK1/WzG2x01Q==;
+        path=/; Domain=.metmuseum.org
+      - visid_incap_1662004=W0E1rdxsSp+FXgNt8W687epQNmoAAAAAQUIPAAAAAACmCHNpJ6LpUWJT/DS1u2Lq;
+        expires=Sat, 19 Jun 2027 15:24:30 GMT; HttpOnly; path=/; Domain=.metmuseum.org
+      X-Cdn:
+      - Imperva
+      Transfer-Encoding:
+      - chunked
+      X-Iinfo:
+      - 50-121958613-121951459 PNYy RT(1781944554972 30) q(0 0 0 -1) r(2 2) U12
+    body:
+      encoding: ASCII-8BIT
+      string: '{"total":11,"objectIDs":[91120,335174,335175,646161,771092,347239,393727,370232,370906,344099,353114]}
+
+        '
+  recorded_at: Sat, 20 Jun 2026 08:35:55 GMT
+recorded_with: VCR 6.4.0

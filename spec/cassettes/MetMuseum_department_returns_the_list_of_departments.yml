@@ -1,0 +1,58 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://collectionapi.metmuseum.org/public/collection/v1/departments
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      X-Powered-By:
+      - ARR/3.0
+      - ASP.NET
+      Date:
+      - Sat, 20 Jun 2026 08:35:33 GMT
+      Set-Cookie:
+      - incap_ses_442_1662004=tJZiZkdjdSCrMz/cuEwiBtZQNmoAAAAAq1Ry/fiZz8XgDvqhYw5Uuw==;
+        path=/; Domain=.metmuseum.org
+      - visid_incap_1662004=FTbEi5tDTeigDrB29zEg4dNQNmoAAAAAQUIPAAAAAACE2Ck23Zd6Jp27jlDxCDg/;
+        expires=Sat, 19 Jun 2027 15:24:23 GMT; HttpOnly; path=/; Domain=.metmuseum.org
+      X-Cdn:
+      - Imperva
+      Transfer-Encoding:
+      - chunked
+      X-Iinfo:
+      - 52-167492773-167492181 PNYy RT(1781944534531 22) q(0 0 0 0) r(2 2) U12
+    body:
+      encoding: ASCII-8BIT
+      string: '{"departments":[{"departmentId":1,"displayName":"American Decorative
+        Arts"},{"departmentId":3,"displayName":"Ancient West Asian Art"},{"departmentId":4,"displayName":"Arms
+        and Armor"},{"departmentId":5,"displayName":"Arts of Africa, Oceania, and
+        the Americas"},{"departmentId":6,"displayName":"Asian Art"},{"departmentId":7,"displayName":"The
+        Cloisters"},{"departmentId":8,"displayName":"The Costume Institute"},{"departmentId":9,"displayName":"Drawings
+        and Prints"},{"departmentId":10,"displayName":"Egyptian Art"},{"departmentId":11,"displayName":"European
+        Paintings"},{"departmentId":12,"displayName":"European Sculpture and Decorative
+        Arts"},{"departmentId":13,"displayName":"Greek and Roman Art"},{"departmentId":14,"displayName":"Islamic
+        Art"},{"departmentId":15,"displayName":"The Robert Lehman Collection"},{"departmentId":16,"displayName":"The
+        Libraries"},{"departmentId":17,"displayName":"Medieval Art"},{"departmentId":18,"displayName":"Musical
+        Instruments"},{"departmentId":19,"displayName":"Photographs"},{"departmentId":21,"displayName":"Modern
+        Art"}]}
+
+        '
+  recorded_at: Sat, 20 Jun 2026 08:35:34 GMT
+recorded_with: VCR 6.4.0

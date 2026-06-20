@@ -1,0 +1,47 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://collectionapi.metmuseum.org/public/collection/v1/objects/0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      X-Powered-By:
+      - ARR/3.0
+      - ASP.NET
+      Date:
+      - Sat, 20 Jun 2026 08:35:32 GMT
+      Set-Cookie:
+      - incap_ses_442_1662004=8vJ2DXwKsSOrMz/cuEwiBtVQNmoAAAAAF92umHbYL8EOpThuo+o3xg==;
+        path=/; Domain=.metmuseum.org
+      - visid_incap_1662004=FTbEi5tDTeigDrB29zEg4dNQNmoAAAAAQUIPAAAAAACE2Ck23Zd6Jp27jlDxCDg/;
+        expires=Sat, 19 Jun 2027 15:24:32 GMT; HttpOnly; path=/; Domain=.metmuseum.org
+      X-Cdn:
+      - Imperva
+      Transfer-Encoding:
+      - chunked
+      X-Iinfo:
+      - 42-19334487-19334455 PNYN RT(1781944534028 28) q(0 0 0 0) r(2 2) U11
+    body:
+      encoding: ASCII-8BIT
+      string: '{"message":"ObjectID not found"}
+
+        '
+  recorded_at: Sat, 20 Jun 2026 08:35:34 GMT
+recorded_with: VCR 6.4.0

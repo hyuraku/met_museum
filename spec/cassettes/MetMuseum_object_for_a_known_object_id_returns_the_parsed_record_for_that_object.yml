@@ -1,0 +1,46 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://collectionapi.metmuseum.org/public/collection/v1/objects/436535
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json
+      Vary:
+      - Origin
+      X-Powered-By:
+      - ARR/3.0
+      - ASP.NET
+      Date:
+      - Sat, 20 Jun 2026 08:35:32 GMT
+      Set-Cookie:
+      - incap_ses_442_1662004=IhuSJDKaegyrMz/cuEwiBtVQNmoAAAAA3VE0uB2WsoQDYppFVvizXg==;
+        path=/; Domain=.metmuseum.org
+      - visid_incap_1662004=FTbEi5tDTeigDrB29zEg4dNQNmoAAAAAQUIPAAAAAACE2Ck23Zd6Jp27jlDxCDg/;
+        expires=Sat, 19 Jun 2027 15:24:23 GMT; HttpOnly; path=/; Domain=.metmuseum.org
+      X-Cdn:
+      - Imperva
+      Transfer-Encoding:
+      - chunked
+      X-Iinfo:
+      - 52-167492357-167492181 PNYy RT(1781944533478 44) q(0 0 0 0) r(4 4) U12
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJvYmplY3RJRCI6NDM2NTM1LCJpc0hpZ2hsaWdodCI6dHJ1ZSwiYWNjZXNzaW9uTnVtYmVyIjoiMTk5My4xMzIiLCJhY2Nlc3Npb25ZZWFyIjoiMTk5MyIsImlzUHVibGljRG9tYWluIjp0cnVlLCJwcmltYXJ5SW1hZ2UiOiJodHRwczovL2ltYWdlcy5tZXRtdXNldW0ub3JnL0NSREltYWdlcy9lcC9vcmlnaW5hbC9EUC00MjU0OS0wMDEuanBnIiwicHJpbWFyeUltYWdlU21hbGwiOiJodHRwczovL2ltYWdlcy5tZXRtdXNldW0ub3JnL0NSREltYWdlcy9lcC93ZWItbGFyZ2UvRFAtNDI1NDktMDAxLmpwZyIsImFkZGl0aW9uYWxJbWFnZXMiOlsiaHR0cHM6Ly9pbWFnZXMubWV0bXVzZXVtLm9yZy9DUkRJbWFnZXMvZXAvb3JpZ2luYWwvTEMtRVBfMTk5M18xMzJfc3VwcGxfQ0gtMDA0LmpwZyIsImh0dHBzOi8vaW1hZ2VzLm1ldG11c2V1bS5vcmcvQ1JESW1hZ2VzL2VwL29yaWdpbmFsL0xDLUVQXzE5OTNfMTMyX3N1cHBsX0NILTAwMy5qcGciLCJodHRwczovL2ltYWdlcy5tZXRtdXNldW0ub3JnL0NSREltYWdlcy9lcC9vcmlnaW5hbC9MQy1FUF8xOTkzXzEzMl9zdXBwbF9DSC0wMDIuanBnIiwiaHR0cHM6Ly9pbWFnZXMubWV0bXVzZXVtLm9yZy9DUkRJbWFnZXMvZXAvb3JpZ2luYWwvTEMtRVBfMTk5M18xMzJfc3VwcGxfQ0gtMDAxLmpwZyJdLCJjb25zdGl0dWVudHMiOlt7ImNvbnN0aXR1ZW50SUQiOjE2MTk0Nywicm9sZSI6IkFydGlzdCIsIm5hbWUiOiJWaW5jZW50IHZhbiBHb2doIiwiY29uc3RpdHVlbnRVTEFOX1VSTCI6Imh0dHA6Ly92b2NhYi5nZXR0eS5lZHUvcGFnZS91bGFuLzUwMDExNTU4OCIsImNvbnN0aXR1ZW50V2lraWRhdGFfVVJMIjoiaHR0cHM6Ly93d3cud2lraWRhdGEub3JnL3dpa2kvUTU1ODIiLCJnZW5kZXIiOiIifV0sImRlcGFydG1lbnQiOiJFdXJvcGVhbiBQYWludGluZ3MiLCJvYmplY3ROYW1lIjoiUGFpbnRpbmciLCJ0aXRsZSI6IldoZWF0IEZpZWxkIHdpdGggQ3lwcmVzc2VzIiwiY3VsdHVyZSI6IiIsInBlcmlvZCI6IiIsImR5bmFzdHkiOiIiLCJyZWlnbiI6IiIsInBvcnRmb2xpbyI6IiIsImFydGlzdFJvbGUiOiJBcnRpc3QiLCJhcnRpc3RQcmVmaXgiOiIiLCJhcnRpc3REaXNwbGF5TmFtZSI6IlZpbmNlbnQgdmFuIEdvZ2giLCJhcnRpc3REaXNwbGF5QmlvIjoiRHV0Y2gsIFp1bmRlcnQgMTg1M+KAkzE4OTAgQXV2ZXJzLXN1ci1PaXNlIiwiYXJ0aXN0U3VmZml4IjoiIiwiYXJ0aXN0QWxwaGFTb3J0IjoiR29naCwgVmluY2VudCB2YW4iLCJhcnRpc3ROYXRpb25hbGl0eSI6IkR1dGNoIiwiYXJ0aXN0QmVnaW5EYXRlIjoiMTg1MyIsImFydGlzdEVuZERhdGUiOiIxODkwIiwiYXJ0aXN0R2VuZGVyIjoiIiwiYXJ0aXN0V2lraWRhdGFfVVJMIjoiaHR0cHM6Ly93d3cud2lraWRhdGEub3JnL3dpa2kvUTU1ODIiLCJhcnRpc3RVTEFOX1VSTCI6Imh0dHA6Ly92b2NhYi5nZXR0eS5lZHUvcGFnZS91bGFuLzUwMDExNTU4OCIsIm9iamVjdERhdGUiOiIxODg5Iiwib2JqZWN0QmVnaW5EYXRlIjoxODg5LCJvYmplY3RFbmREYXRlIjoxODg5LCJtZWRpdW0iOiJPaWwgb24gY2FudmFzIiwiZGltZW5zaW9ucyI6IjI4IDEzLzE2IMOXIDM2IDMvNCBpbi4gKDczLjIgw5cgOTMuNCBjbSkiLCJtZWFzdXJlbWVudHMiOlt7ImVsZW1lbnROYW1lIjoiR2xhemluZyIsImVsZW1lbnREZXNjcmlwdGlvbiI6IlNlZSBOb3RlcyBpbiBEZXNjcmlwdGlvbiIsImVsZW1lbnRNZWFzdXJlbWVudHMiOnsiSGVpZ2h0Ijo3NS4yNDc2NSwiV2lkdGgiOjk0LjkzMjY5fX0seyJlbGVtZW50TmFtZSI6Ik92ZXJhbGwiLCJlbGVtZW50RGVzY3JpcHRpb24iOm51bGwsImVsZW1lbnRNZWFzdXJlbWVudHMiOnsiSGVpZ2h0Ijo3My4yLCJXaWR0aCI6OTMuNH19XSwiY3JlZGl0TGluZSI6IlB1cmNoYXNlLCBUaGUgQW5uZW5iZXJnIEZvdW5kYXRpb24gR2lmdCwgMTk5MyIsImdlb2dyYXBoeVR5cGUiOiIiLCJjaXR5IjoiIiwic3RhdGUiOiIiLCJjb3VudHkiOiIiLCJjb3VudHJ5IjoiIiwicmVnaW9uIjoiIiwic3VicmVnaW9uIjoiIiwibG9jYWxlIjoiIiwibG9jdXMiOiIiLCJleGNhdmF0aW9uIjoiIiwicml2ZXIiOiIiLCJjbGFzc2lmaWNhdGlvbiI6IlBhaW50aW5ncyIsInJpZ2h0c0FuZFJlcHJvZHVjdGlvbiI6IiIsImxpbmtSZXNvdXJjZSI6IiIsIm1ldGFkYXRhRGF0ZSI6IjIwMjYtMDUtMTNUMDQ6NTY6NDcuNjI3WiIsInJlcG9zaXRvcnkiOiJNZXRyb3BvbGl0YW4gTXVzZXVtIG9mIEFydCwgTmV3IFlvcmssIE5ZIiwib2JqZWN0VVJMIjoiaHR0cHM6Ly93d3cubWV0bXVzZXVtLm9yZy9hcnQvY29sbGVjdGlvbi9zZWFyY2gvNDM2NTM1IiwidGFncyI6W3sidGVybSI6IkxhbmRzY2FwZXMiLCJBQVRfVVJMIjoiaHR0cDovL3ZvY2FiLmdldHR5LmVkdS9wYWdlL2FhdC8zMDAxMzIyOTQiLCJXaWtpZGF0YV9VUkwiOiJodHRwczovL3d3dy53aWtpZGF0YS5vcmcvd2lraS9RMTkxMTYzIn0seyJ0ZXJtIjoiQ3lwcmVzc2VzIiwiQUFUX1VSTCI6Imh0dHA6Ly92b2NhYi5nZXR0eS5lZHUvcGFnZS9hYXQvMzAwMzQzNjQxIiwiV2lraWRhdGFfVVJMIjoiaHR0cHM6Ly93d3cud2lraWRhdGEub3JnL3dpa2kvUTE0NjkxMSJ9LHsidGVybSI6IlN1bW1lciIsIkFBVF9VUkwiOiJodHRwOi8vdm9jYWIuZ2V0dHkuZWR1L3BhZ2UvYWF0LzMwMDEzMzA5OSIsIldpa2lkYXRhX1VSTCI6Imh0dHBzOi8vd3d3Lndpa2lkYXRhLm9yZy93aWtpL1ExMzEzIn1dLCJvYmplY3RXaWtpZGF0YV9VUkwiOiJodHRwczovL3d3dy53aWtpZGF0YS5vcmcvd2lraS9RMTg2ODk0NTgiLCJpc1RpbWVsaW5lV29yayI6dHJ1ZSwiR2FsbGVyeU51bWJlciI6IjgyMiJ9Cg==
+  recorded_at: Sat, 20 Jun 2026 08:35:33 GMT
+recorded_with: VCR 6.4.0
