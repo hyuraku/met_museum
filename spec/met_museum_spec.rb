@@ -1,283 +1,190 @@
 RSpec.describe MetMuseum do
-  describe "Collection" do
-    describe "objects" do
-      let(:objects) { MetMuseum::Collection.new.objects(**{ metadataDate: metadataDate, departmentIds: departmentIds }) }
-      context "all data" do
-        let(:metadataDate) { nil }
-        let(:departmentIds) { nil }
-        it "success" do
-          expect(objects["objectIDs"]).to be_truthy
-          expect(objects["total"]).to be_truthy
-          expect(objects["objectIDs"].size).to eq objects["total"]
-        end
-      end
+  let(:collection) { MetMuseum::Collection.new }
 
-      context "assign metadataDate" do
-        context "Date" do
-          let(:metadataDate) { Date.new(2018, 10, 10) }
-          let(:departmentIds) { nil }
-          it "success with DataType metadataDate" do
-            expect(objects["objectIDs"]).to be_truthy
-            expect(objects["total"]).to be_truthy
-            expect(objects["objectIDs"].size).to eq objects["total"]
-          end
-        end
+  describe "#objects" do
+    # Scope to a single small department so the recorded cassette stays small:
+    # the unscoped /objects listing returns ~500k ids.
+    let(:department_id) { 15 } # The Robert Lehman Collection
 
-        context "Datetime" do
-          let(:metadataDate) { DateTime.new(2018, 10, 10) }
-          let(:departmentIds) { nil }
-          it "success with DataType metadataDate" do
-            expect(objects["objectIDs"]).to be_truthy
-            expect(objects["total"]).to be_truthy
-            expect(objects["objectIDs"].size).to eq objects["total"]
-          end
-        end
-      end
+    context "scoped to a department" do
+      subject(:objects) { collection.objects(departmentIds: department_id) }
 
-      context "assign departmentIds" do
-        context "Date" do
-          let(:metadataDate) { nil }
-          let(:departmentIds) { 11_111 }
-          it "success with DataType metadataDate" do
-            expect(objects["objectIDs"]).to be_truthy
-            expect(objects["total"]).to be_truthy
-            expect(objects["objectIDs"].size).to eq objects["total"]
-          end
-        end
+      it "returns the total and the matching object ids" do
+        expect(objects["total"]).to be_a(Integer)
+        expect(objects["objectIDs"]).to be_an(Array)
+        expect(objects["objectIDs"].size).to eq(objects["total"])
       end
     end
 
-    describe "object" do
-      let(:object) { MetMuseum::Collection.new.object(objectID) }
-      context "Real objectID" do
-        let(:objectID) { 436_535 }
-        it "success with objectID" do
-          expect(object["objectID"]).to eq(objectID)
-          expect(object["isHighlight"]).to eq(true)
-          expect(object["accessionNumber"]).to eq("1993.132")
-          expect(object["isPublicDomain"]).to eq(true)
-          expect(object["primaryImage"]).to eq("https://images.metmuseum.org/CRDImages/ep/original/DT1567.jpg")
-          expect(object["primaryImageSmall"]).to eq("https://images.metmuseum.org/CRDImages/ep/web-large/DT1567.jpg")
-          expect(object["additionalImages"]).to eq [
-            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-004.jpg",
-            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-003.jpg",
-            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-002.jpg",
-            "https://images.metmuseum.org/CRDImages/ep/original/LC-EP_1993_132_suppl_CH-001.jpg"
-          ]
-          expect(object["constituents"]).to eq([
-                                                 {
-                                                   "constituentID"=>161947,
-                                                   "constituentULAN_URL" => "http://vocab.getty.edu/page/ulan/500115588",
-                                                   "constituentWikidata_URL" => "https://www.wikidata.org/wiki/Q5582",
-                                                   "gender" => "",
-                                                   "name" => "Vincent van Gogh",
-                                                   "role" => "Artist"
-                                                 }
-                                               ])
-          expect(object["department"]).to eq("European Paintings")
-          expect(object["objectName"]).to eq("Painting")
-          expect(object["title"]).to eq("Wheat Field with Cypresses")
-          expect(object["culture"]).to eq("")
-          expect(object["period"]).to eq("")
-          expect(object["dynasty"]).to eq("")
-          expect(object["reign"]).to eq("")
-          expect(object["portfolio"]).to eq("")
-          expect(object["artistRole"]).to eq("Artist")
-          expect(object["artistPrefix"]).to eq("")
-          expect(object["artistDisplayName"]).to eq("Vincent van Gogh")
-          expect(object["artistDisplayBio"]).to eq("Dutch, Zundert 1853–1890 Auvers-sur-Oise")
-          expect(object["artistSuffix"]).to eq("")
-          expect(object["artistAlphaSort"]).to eq("Gogh, Vincent van")
-          expect(object["artistNationality"]).to eq("Dutch")
-          expect(object["artistBeginDate"]).to eq("1853")
-          expect(object["artistEndDate"]).to eq("1890")
-          expect(object["objectDate"]).to eq("1889")
-          expect(object["objectBeginDate"]).to eq(1889)
-          expect(object["objectEndDate"]).to eq(1889)
-          expect(object["medium"]).to eq("Oil on canvas")
-          expect(object["dimensions"]).to eq("28 7/8 × 36 3/4 in. (73.2 × 93.4 cm)")
-          expect(object["dimensionsParsed"]).to eq(nil)
-          expect(object["measurements"]).to eq([{ "elementDescription"=>nil,
-                                                  "elementMeasurements"=>{"Height"=>73.34264, "Width"=>93.4}, 
-                                                  "elementName"=>"Overall"},
-                                                { "elementDescription"=>"See Notes in Description",
-                                                  "elementMeasurements"=>{"Height"=>75.24765, "Width"=>94.93269},
-                                                  "elementName"=>"Glazing"}])
-          expect(object["creditLine"]).to eq("Purchase, The Annenberg Foundation Gift, 1993")
-          expect(object["geographyType"]).to eq("")
-          expect(object["city"]).to eq("")
-          expect(object["state"]).to eq("")
-          expect(object["county"]).to eq("")
-          expect(object["country"]).to eq("")
-          expect(object["region"]).to eq("")
-          expect(object["subregion"]).to eq("")
-          expect(object["locale"]).to eq("")
-          expect(object["locus"]).to eq("")
-          expect(object["excavation"]).to eq("")
-          expect(object["river"]).to eq("")
-          expect(object["classification"]).to eq("Paintings")
-          expect(object["rightsAndReproduction"]).to eq("")
-          expect(object["linkResource"]).to eq("")
-          expect(object["repository"]).to eq("Metropolitan Museum of Art, New York, NY")
-          expect(object["objectURL"]).to eq("https://www.metmuseum.org/art/collection/search/436535")
-          expect(object["tags"]).to eq([
-                                         { "AAT_URL" => "http://vocab.getty.edu/page/aat/300132294",
-                                          "Wikidata_URL"=>"https://www.wikidata.org/wiki/Q191163",
-                                          "term" => "Landscapes" },
-                                         { "AAT_URL" => "http://vocab.getty.edu/page/aat/300343641",
-                                          "Wikidata_URL"=>"https://www.wikidata.org/wiki/Q146911", 
-                                          "term" => "Cypresses" },
-                                         { "AAT_URL" => "http://vocab.getty.edu/page/aat/300133099",
-                                          "Wikidata_URL"=>"https://www.wikidata.org/wiki/Q1313", 
-                                          "term" => "Summer" }
-                                       ])
-          expect(object["objectWikidata_URL"]).to eq "https://www.wikidata.org/wiki/Q18689458"
-          expect(object["isTimelineWork"]).to eq true
-          expect(object["GalleryNumber"]).to eq "822"
+    context "with a metadataDate" do
+      subject(:objects) do
+        collection.objects(metadataDate: metadata_date, departmentIds: department_id)
+      end
+
+      context "given a Date" do
+        let(:metadata_date) { Date.new(2018, 10, 10) }
+
+        it "accepts it and returns a parsed listing" do
+          expect(objects["total"]).to be_a(Integer)
+          expect(objects["objectIDs"]).to be_an(Array)
         end
       end
 
-      context "Not Real objectID" do
-        let(:objectID) { 0 }
-        it "unsuccess with objectID" do
-          expect { object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
-        end
-      end
+      context "given a DateTime" do
+        let(:metadata_date) { DateTime.new(2018, 10, 10) }
 
-      context "Not enter objectID" do
-        let(:objectID) { nil }
-        it "unsuccess with objectID" do
-          expect { object["objectID"] }.to raise_error(MetMuseum::NotFoundError)
+        it "accepts it and returns a parsed listing" do
+          expect(objects["total"]).to be_a(Integer)
+          expect(objects["objectIDs"]).to be_an(Array)
         end
       end
     end
+  end
 
-    describe "departments" do
-      let(:department) { MetMuseum::Collection.new.department }
-      context "all departments" do
-        it "successful" do
-          expect(department["departments"].size).to eq(19)
-        end
+  describe "#object" do
+    subject(:object) { collection.object(id) }
+
+    context "for a known object id" do
+      let(:id) { 436_535 } # Van Gogh, Wheat Field with Cypresses
+
+      # Assert the wrapper's responsibility (identity, presence and types of
+      # fields) rather than The Met's exact metadata, which changes over time.
+      it "returns the parsed record for that object" do
+        expect(object["objectID"]).to eq(id)
+        expect(object["title"]).to be_a(String)
+        expect(object["artistDisplayName"]).to be_a(String)
+        expect(object["primaryImage"]).to be_a(String)
+        expect(object["additionalImages"]).to be_an(Array)
+        expect(object["constituents"]).to be_an(Array)
+        expect(object["measurements"]).to be_an(Array)
+        expect(object).to have_key("isHighlight")
+        expect(object).to have_key("isPublicDomain")
       end
     end
 
-    describe "search" do
-      let(:search) do
-        MetMuseum::Collection.new.search(q, **options)
-      end
+    context "for a non-existent object id" do
+      let(:id) { 0 }
 
-      let(:q) { "cat" }
-      let(:options) { {} }
-      context "real query" do
-        it "successful search" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
+      it "raises NotFoundError" do
+        expect { object }.to raise_error(MetMuseum::NotFoundError)
       end
+    end
 
-      context "with limit" do
-        let(:options) { {limit: 1} }
-        it "successful search with certain number" do
-          expect(search.size).to eq(1)
-          expect(search.first).to be_truthy
-        end
-      end
+    context "for a nil object id" do
+      let(:id) { nil }
 
-      context "with isHighlight" do
-        let(:options) { {isHighlight: true} }
-        it "successful search with isHighlight" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
+      it "raises NotFoundError" do
+        expect { object }.to raise_error(MetMuseum::NotFoundError)
       end
+    end
+  end
 
-      context "the the case title is false" do
-        let(:options) { {title: false} }
-        it "successful search with title" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+  describe "#department" do
+    subject(:department) { collection.department }
 
-      context "with the case tags is false" do
-        let(:options) { {tags: false} }
-        it "successful search with tags" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+    it "returns the list of departments" do
+      expect(department["departments"]).to be_an(Array)
+      expect(department["departments"]).not_to be_empty
+      expect(department["departments"].first).to include("departmentId", "displayName")
+    end
+  end
 
-      context "with departmentId" do
-        let(:options) { {departmentId: 12} }
-        it "successful search with departmentId" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+  describe "#search" do
+    subject(:search) { collection.search(query, **options) }
+    let(:query) { "cat" }
+    let(:options) { {} }
 
-      context "with isOnView" do
-        let(:options) { {isOnView: true} }
-        it "successful search with isOnView" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
+    shared_examples "a successful search listing" do
+      it "returns the total and matching object ids" do
+        expect(search["total"]).to be_a(Integer)
+        expect(search["objectIDs"]).to be_an(Array)
+        expect(search["objectIDs"].size).to eq(search["total"])
       end
+    end
 
-      context "with artistOrCulture" do
-        let(:options) { {artistOrCulture: true} }
-        it "successful search with artistOrCulture" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+    context "with a plain query" do
+      include_examples "a successful search listing"
+    end
 
-      context "with medium" do
-        let(:options) { {medium: "Paintings"} }
-        it "successful search with medium" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+    context "with a limit" do
+      let(:options) { { limit: 1 } }
 
-      context "with multi medium" do
-        let(:medium) { %w[Paintings Sculpture] }
-        it "successful search with medium" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
+      it "returns that many fully-fetched objects" do
+        expect(search.size).to eq(1)
+        expect(search.first["objectID"]).to be_a(Integer)
       end
+    end
 
-      context "with hasImages" do
-        let(:options) { {hasImages: true} }
-        it "successful search with hasImages" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+    context "with isHighlight" do
+      let(:options) { { isHighlight: true } }
 
-      context "with geoLocation" do
-        let(:options) { {geoLocation: "Paris"} }
-        it "successful search with geoLocation" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+      include_examples "a successful search listing"
+    end
 
-      context "with multi geoLocation" do
-        let(:options) { {geoLocation: %w[Paris China]} }
-        it "successful search with geoLocation" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+    context "with title" do
+      let(:options) { { title: false } }
 
-      context "with dateBegin and dateEnd" do
-        let(:options) { {dateBegin: 1000, dateEnd: 2018 } }
-        it "successful search with dateBegin and dateEnd" do
-          expect(search["total"]).to be_truthy
-          expect(search["objectIDs"].size).to eq search["total"]
-        end
-      end
+      include_examples "a successful search listing"
+    end
+
+    context "with tags" do
+      let(:options) { { tags: false } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with departmentId" do
+      let(:options) { { departmentId: 12 } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with isOnView" do
+      let(:options) { { isOnView: true } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with artistOrCulture" do
+      let(:options) { { artistOrCulture: true } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with a single medium" do
+      let(:options) { { medium: "Paintings" } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with multiple mediums" do
+      let(:options) { { medium: %w[Paintings Sculpture] } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with hasImages" do
+      let(:options) { { hasImages: true } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with a geoLocation" do
+      let(:options) { { geoLocation: "Paris" } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with multiple geoLocations" do
+      let(:options) { { geoLocation: %w[Paris China] } }
+
+      include_examples "a successful search listing"
+    end
+
+    context "with dateBegin and dateEnd" do
+      let(:options) { { dateBegin: 1000, dateEnd: 2018 } }
+
+      include_examples "a successful search listing"
     end
   end
 end
