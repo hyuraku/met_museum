@@ -1,6 +1,13 @@
 RSpec.describe MetMuseum do
   let(:collection) { MetMuseum::Collection.new }
 
+  describe ".new" do
+    it "accepts custom open/read timeouts and stays functional" do
+      configured = MetMuseum::Collection.new(open_timeout: 3, read_timeout: 9)
+      expect(configured.department["departments"]).to be_an(Array)
+    end
+  end
+
   describe "#objects" do
     # Scope to a single small department so the recorded cassette stays small:
     # the unscoped /objects listing returns ~500k ids.
