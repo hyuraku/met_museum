@@ -4,6 +4,13 @@ require "json"
 
 module MetMuseum
   class Collection
+    # @param [Integer] open_timeout Seconds to wait for the connection to open (default: 5).
+    # @param [Integer] read_timeout Seconds to wait for one block of the response to be read (default: 15).
+    def initialize(open_timeout: 5, read_timeout: 15)
+      @open_timeout = open_timeout
+      @read_timeout = read_timeout
+    end
+
     # Returns a listing of all valid Object IDs available to use based on the given parameters.
     # @param [Date, DateTime] metadataDate Returns objects with updated data after this date.
     # @param [Integer] departmentIds Returns objects in a specific department.
@@ -111,7 +118,7 @@ module MetMuseum
       return origin_response if limit.nil? || limit <= 0
 
       object_ids = origin_response["objectIDs"].take(limit)
-      object_ids.map { |id| MetMuseum::Collection.new.object(id) }
+      object_ids.map { |id| object(id) }
     end
 
     private
@@ -125,6 +132,8 @@ module MetMuseum
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true if uri.scheme == 'https'
+      http.open_timeout = @open_timeout
+      http.read_timeout = @read_timeout
 
       request = Net::HTTP::Get.new(uri.request_uri)
       http.request(request)
@@ -151,17 +160,6 @@ module MetMuseum
         raise MetMuseum.error_class(response_code), "Code: #{response_code}, response: #{response.body}"
       end
       JSON.parse(response.body)
-    end
-
-    def multi_option
-      case self
-      when String
-        return self
-      when Array
-        return join("|")
-      else
-        raise TypeError, "Write String or Array type"
-      end
     end
   end
 end

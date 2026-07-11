@@ -27,6 +27,17 @@ Or install it yourself as:
 require 'met_museum'
 ```
 
+### Configuring timeouts
+
+`MetMuseum::Collection.new` accepts optional `open_timeout` and `read_timeout`
+keyword arguments (in seconds) to control the underlying HTTP client. They
+default to `5` and `15` respectively.
+
+```rb
+collection = MetMuseum::Collection.new(open_timeout: 3, read_timeout: 10)
+collection.object(436535)
+```
+
 The description of the method is as follows
 
 <details>
