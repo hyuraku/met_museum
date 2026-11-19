@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Development
+- CI now tests Ruby 3.3, 3.4 and 4.0. Ruby 3.5 was released as 4.0, and the
+  `3.5.0-preview1` build is not available on `ubuntu-latest` (ubuntu-26.04).
+- The CI matrix no longer cancels the other Ruby versions when one fails.
+
 ## [1.5.0] - 2026-06-24
 
 ### Added
