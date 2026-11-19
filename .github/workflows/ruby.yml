@@ -14,8 +14,9 @@ jobs:
 
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        ruby: [ '3.3', '3.4', '3.5' ]
+        ruby: [ '3.3', '3.4', '4.0' ]
     name: Ruby ${{ matrix.ruby }} spec
     steps:
     - uses: actions/checkout@v4
