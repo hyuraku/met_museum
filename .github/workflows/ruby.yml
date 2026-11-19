@@ -19,7 +19,7 @@ jobs:
         ruby: [ '3.3', '3.4', '4.0' ]
     name: Ruby ${{ matrix.ruby }} spec
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Set up Ruby
     # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
     # change this to (see https://github.com/ruby/setup-ruby#versioning):
